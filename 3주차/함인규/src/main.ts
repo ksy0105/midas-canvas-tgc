@@ -158,3 +158,29 @@ ctx9.moveTo(100, 150);
 ctx9.lineTo(300, 150);
 ctx9.setLineDash([20, 10, 50, 10]) //패턴 선-공백-선-공백
 ctx9.stroke();
+
+//사각형 그리기
+const $canvas10 = createCanvas(400, 300);
+const ctx10 = $canvas10.getContext('2d')!;
+ctx10.strokeRect(20,20,100,100);
+ctx10.strokeRect(150,150,50,50);
+
+//사각형 내부 채우기
+const $canvas11 = createCanvas(400, 300);
+const ctx11 = $canvas11.getContext('2d')!;
+ctx11.fillStyle = 'red';
+ctx11.fillRect(20,20,100,100); // 내부가 칠해진 사각형 그리기
+ctx11.strokeRect(20,20,100,100); // 사각형 모서리 그리기
+ctx11.fillStyle = 'green';
+ctx11.fillRect(150,150,50,50);
+ctx11.strokeRect(150,150,50,50);
+
+//특정 영역 (사각형) 지우기
+const $canvas12 = createCanvas(400, 300);
+const ctx12 = $canvas12.getContext('2d')!;
+ctx12.lineWidth = 10;
+ctx12.strokeStyle = 'red';
+ctx12.fillStyle = 'blue';
+ctx12.fillRect(50,50,200,200);
+ctx12.strokeRect(50,50,200,200);
+ctx12.clearRect(70, 70, 100, 50); // 특정 영역 지우기
