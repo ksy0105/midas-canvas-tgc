@@ -1,8 +1,8 @@
-import {getCtx} from "../../common.ts";
+import {initCanvasContext, makeCanvasContainer} from "../../utils.ts";
 
-// 3.4 > LinearGradient
-export const execute3_4_1 = () => {
-    const ctx = getCtx('#chapter3_4_1');
+// LinearGradient
+const execute3_4_1 = (containerId: string) => {
+    const ctx = initCanvasContext(containerId, 1);
 
     const grad = ctx.createLinearGradient(50, 50, 250, 50);
     grad.addColorStop(0, "red");
@@ -18,9 +18,9 @@ export const execute3_4_1 = () => {
     ctx.strokeRect(50, 50, 200, 200);
 }
 
-// 3.4 > RadialGradient
-export const execute3_4_2 = () => {
-    const ctx = getCtx('#chapter3_4_2');
+// RadialGradient
+const execute3_4_2 = (containerId: string) => {
+    const ctx = initCanvasContext(containerId, 2);
 
     const grad = ctx.createRadialGradient(0, 0, 0, 100, 100, 300);
     grad.addColorStop(0, "red");
@@ -31,3 +31,27 @@ export const execute3_4_2 = () => {
     ctx.fillRect(0, 0, 300, 300);
     ctx.strokeRect(0, 0, 300, 300);
 }
+
+// 패턴으로 사각형 내부 채우기
+const execute3_4_3 = (containerId: string) => {
+    const ctx = initCanvasContext(containerId, 3);
+
+    const image = new Image();
+    image.src = "image2.png";
+    image.onload = function () {
+        ctx.fillStyle = ctx.createPattern(image, "repeat")!;
+        ctx.fillRect(0, 0, 400, 300);
+    }
+}
+
+const execute3_4 = () => {
+    const id = 'chapter3_4'
+
+    makeCanvasContainer(id, '3.4. 내부 채우기');
+
+    execute3_4_1(id);
+    execute3_4_2(id);
+    execute3_4_3(id);
+}
+
+export default execute3_4;
