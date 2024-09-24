@@ -1,5 +1,6 @@
 import './style.css'
 import PATTERN_IMAGE from './assets/pattern.jpg'
+import IMAGE from './assets/image.jpeg'
 
 class CanvasExample {
     $canvas: HTMLCanvasElement;
@@ -293,3 +294,30 @@ new CanvasExample(($canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) =>
         ctx.fillRect(0, 0, $canvas.width, $canvas.height);
     };
 });
+
+//이미지를 원래 크기대로 그리기
+new CanvasExample((_, ctx: CanvasRenderingContext2D) => {
+    const myPic = new Image();
+    myPic.src = IMAGE;
+    myPic.onload = () => {
+        ctx.drawImage(myPic, 10, 10); //그릴이미지, 시작 좌표
+    }
+})
+
+//이미지의 크기를 변형하여 그리기
+new CanvasExample((_, ctx: CanvasRenderingContext2D) => {
+    const myPic = new Image();
+    myPic.src = IMAGE;
+    myPic.onload = () => {
+        ctx.drawImage(myPic, 10, 10, 150, 100); //그릴이미지, 시작 좌표, 이미지 폭과 높이
+    }
+})
+
+//이미지를 잘라 일부만 그리기
+new CanvasExample((_,ctx: CanvasRenderingContext2D) => {
+    const myPic = new Image();
+    myPic.src = IMAGE;
+    myPic.onload = () => {
+        ctx.drawImage(myPic, 20, 20, 200, 200, 10,10, 300,200); //그릴이미지, 잘릴시작 좌표, 잘릴이미지 폭과 높이, 이미지시작좌표, 이미지 폭과 높이
+    }
+})
