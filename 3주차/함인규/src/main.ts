@@ -321,3 +321,78 @@ new CanvasExample((_,ctx: CanvasRenderingContext2D) => {
         ctx.drawImage(myPic, 20, 20, 200, 200, 10,10, 300,200); //그릴이미지, 잘릴시작 좌표, 잘릴이미지 폭과 높이, 이미지시작좌표, 이미지 폭과 높이
     }
 })
+
+//글씨 쓰기
+new CanvasExample((_,ctx: CanvasRenderingContext2D) => {
+    ctx.fillText("The fillText() method draws filled text on the canvas.", 50, 100);
+    ctx.fillText("The fillText() method draws filled text on the canvas.", 50, 120, 100);
+    ctx.fillText("The fillText() method draws filled text on the canvas.", 50, 140, 200);
+    ctx.fillText("The fillText() method draws filled text on the canvas.", 50, 160, 300); //화면에 표시될 글씨, 글씨가 표시될 좌표, 화면에 표시될 최대 폭
+})
+
+//폰트 스타일 변경
+new CanvasExample((_,ctx: CanvasRenderingContext2D) => {
+    ctx.fillStyle = "#6495ED"; //글씨의 색을 변경한다.
+    ctx.font = "italic bold 28px Arial, sans-serif"; //글씨 폰트 스타일 변경
+    ctx.fillText("Hello Canvas World!", 50, 100); //글씨 채우기
+})
+
+//글씨의 외곽선 그리기
+new CanvasExample((_,ctx: CanvasRenderingContext2D) => {
+    ctx.fillStyle = "#6495ED"; //글씨의 색을 변경한다.
+    ctx.font = "italic bold 40px Arial, sans-serif"; //글씨 폰트 스타일 변경
+    ctx.fillText("Hello Canvas World!", 10, 100); //글씨 채우기
+    ctx.lineWidth = 2; //선 두께
+    ctx.strokeText("Hello Canvas World!", 10, 100); //글씨 외곽선만 그리기
+})
+
+//글씨 좌우정렬
+new CanvasExample((_,ctx: CanvasRenderingContext2D) => {
+    ctx.fillStyle = "#6495ED";
+    ctx.font = "italic bold 30px Arial, sans-serif";
+    ctx.textAlign = "start"; //글씨 시작점 기준(기본)
+    ctx.fillText("Hello World!", 200, 50);
+
+    ctx.textAlign = "end"; //글씨 끝점 기준
+    ctx.fillText("Hello World!", 200, 100);
+
+    ctx.textAlign = "left"; //글씨의 왼쪽 기준
+    ctx.fillText("Hello World!", 200, 150);
+
+    ctx.textAlign = "right"; //글씨의 오른쪽 기준
+    ctx.fillText("Hello World!", 200, 200);
+
+    ctx.textAlign = "center"; //글씨의 중간 기준
+    ctx.fillText("Hello World!", 200, 250);
+
+    ctx.strokeStyle = "red";
+    ctx.moveTo(200, 20);
+    ctx.lineTo(200, 280);
+    ctx.stroke();
+})
+
+//글씨 상하정렬
+new CanvasExample((_,ctx: CanvasRenderingContext2D) => {
+    ctx.fillStyle = "#6495ED";
+    ctx.font = "italic bold 30px Arial, sans-serif";
+
+    ctx.textBaseline = "top"; //글씨 시작점이 위
+    ctx.fillText("top!", 10, 150);
+
+    ctx.textBaseline = "bottom"; //글씨 시작점이 아래
+    ctx.fillText("bottom!", 50, 150);
+
+    ctx.textBaseline = "middle"; //글씨 시작점이 중간
+    ctx.fillText("middle!", 130, 150);
+
+    ctx.textBaseline = "alphabetic"; //기본값
+    ctx.fillText("alphabetic!", 220, 150);
+
+    ctx.textBaseline = "hanging"; //글씨 시작점이 바로 위
+    ctx.fillText("hanging!", 270, 150);
+
+    ctx.strokeStyle = "red";
+    ctx.moveTo(0, 150);
+    ctx.lineTo(400, 150);
+    ctx.stroke();
+})
