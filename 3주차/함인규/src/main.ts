@@ -1,22 +1,23 @@
 import './style.css'
+import PATTERN_IMAGE from './assets/pattern.jpg'
 
 class CanvasExample {
     $canvas: HTMLCanvasElement;
     ctx: CanvasRenderingContext2D;
 
-    constructor(callback: (ctx: CanvasRenderingContext2D) => void) {
+    constructor(callback: ($canvas:HTMLCanvasElement, ctx: CanvasRenderingContext2D) => void) {
         const $app = document.getElementById('app')!;
         this.$canvas = document.createElement('canvas');
         this.$canvas.width = 400;
         this.$canvas.height = 300;
         $app.appendChild(this.$canvas);
         this.ctx = this.$canvas.getContext('2d')!;
-        callback(this.ctx)
+        callback(this.$canvas, this.ctx)
     }
 }
 
 //선그리기
-new CanvasExample((ctx: CanvasRenderingContext2D) => {
+new CanvasExample((_,ctx: CanvasRenderingContext2D) => {
     ctx.beginPath();
     ctx.moveTo(100, 50);
     ctx.lineTo(300,50);
@@ -24,7 +25,7 @@ new CanvasExample((ctx: CanvasRenderingContext2D) => {
 })
 
 //선으로 사각형 그리기
-new CanvasExample((ctx: CanvasRenderingContext2D) => {
+new CanvasExample((_,ctx: CanvasRenderingContext2D) => {
     ctx.beginPath();
     ctx.moveTo(100, 50);
     ctx.lineTo(300, 50);
@@ -35,7 +36,7 @@ new CanvasExample((ctx: CanvasRenderingContext2D) => {
 })
 
 //내부에 색 채우기 - 검정색
-new CanvasExample((ctx: CanvasRenderingContext2D) => {
+new CanvasExample((_,ctx: CanvasRenderingContext2D) => {
     ctx.beginPath();
     ctx.moveTo(100, 50);
     ctx.lineTo(300, 50);
@@ -48,7 +49,7 @@ new CanvasExample((ctx: CanvasRenderingContext2D) => {
 })
 
 //내부에 색 채우기 - 다른색
-new CanvasExample((ctx: CanvasRenderingContext2D) => {
+new CanvasExample((_,ctx: CanvasRenderingContext2D) => {
     ctx.beginPath();
     ctx.moveTo(100, 50);
     ctx.lineTo(300, 50);
@@ -61,7 +62,7 @@ new CanvasExample((ctx: CanvasRenderingContext2D) => {
 })
 
 //선을 다른 색으로 하고 두께 변경하기
-new CanvasExample((ctx: CanvasRenderingContext2D) => {
+new CanvasExample((_,ctx: CanvasRenderingContext2D) => {
     ctx.beginPath();
     ctx.moveTo(100, 50);
     ctx.lineTo(300, 50);
@@ -76,7 +77,7 @@ new CanvasExample((ctx: CanvasRenderingContext2D) => {
 })
 
 //선 끝부분 처리하기
-new CanvasExample((ctx: CanvasRenderingContext2D) => {
+new CanvasExample((_,ctx: CanvasRenderingContext2D) => {
     ctx.beginPath();
     ctx.moveTo(100, 50);
     ctx.lineTo(300, 50);
@@ -92,7 +93,7 @@ new CanvasExample((ctx: CanvasRenderingContext2D) => {
 })
 
 //선의 세가지 끝부분 처리 방법
-new CanvasExample((ctx: CanvasRenderingContext2D) => {
+new CanvasExample((_,ctx: CanvasRenderingContext2D) => {
     ctx.lineWidth = 20;
     ctx.strokeStyle = "blue"
 
@@ -116,7 +117,7 @@ new CanvasExample((ctx: CanvasRenderingContext2D) => {
 })
 
 //선의 꺾인 부분 처리
-new CanvasExample((ctx: CanvasRenderingContext2D) => {
+new CanvasExample((_,ctx: CanvasRenderingContext2D) => {
     ctx.lineWidth = 20;
     ctx.strokeStyle = "blue";
 
@@ -143,7 +144,7 @@ new CanvasExample((ctx: CanvasRenderingContext2D) => {
 })
 
 //점선 만들기
-new CanvasExample((ctx: CanvasRenderingContext2D) => {
+new CanvasExample((_,ctx: CanvasRenderingContext2D) => {
     ctx.lineWidth = 20;
 
     ctx.beginPath();
@@ -166,13 +167,13 @@ new CanvasExample((ctx: CanvasRenderingContext2D) => {
 });
 
 //사각형 그리기
-new CanvasExample((ctx: CanvasRenderingContext2D) => {
+new CanvasExample((_,ctx: CanvasRenderingContext2D) => {
     ctx.strokeRect(20,20,100,100);
     ctx.strokeRect(150,150,50,50);
 });
 
 //사각형 내부 채우기
-new CanvasExample((ctx: CanvasRenderingContext2D) => {
+new CanvasExample((_,ctx: CanvasRenderingContext2D) => {
     ctx.fillStyle = 'red';
     ctx.fillRect(20,20,100,100); // 내부가 칠해진 사각형 그리기
     ctx.strokeRect(20,20,100,100); // 사각형 모서리 그리기
@@ -182,7 +183,7 @@ new CanvasExample((ctx: CanvasRenderingContext2D) => {
 });
 
 //특정 영역 (사각형) 지우기
-new CanvasExample((ctx: CanvasRenderingContext2D) => {
+new CanvasExample((_,ctx: CanvasRenderingContext2D) => {
     ctx.lineWidth = 10;
     ctx.strokeStyle = 'red';
     ctx.fillStyle = 'blue';
@@ -192,13 +193,13 @@ new CanvasExample((ctx: CanvasRenderingContext2D) => {
 })
 
 //원 그리기
-new CanvasExample((ctx: CanvasRenderingContext2D) => {
+new CanvasExample((_,ctx: CanvasRenderingContext2D) => {
     ctx.arc(150, 150, 100, 0, Math.PI*2, true); // x, y, 반지름, 시작각도, 끝각도, 그리는방향(시계방향 default)
     ctx.stroke() // 선 긋기
 })
 
 //선과 호를 연결하기
-new CanvasExample((ctx: CanvasRenderingContext2D) => {
+new CanvasExample((_,ctx: CanvasRenderingContext2D) => {
     ctx.beginPath(); // 시작 위치로 이동
     ctx.moveTo(50, 50);
     ctx.lineTo(300, 50);
@@ -208,7 +209,7 @@ new CanvasExample((ctx: CanvasRenderingContext2D) => {
 })
 
 //조절점 하나짜리 커브 그리기
-new CanvasExample((ctx: CanvasRenderingContext2D) => {
+new CanvasExample((_,ctx: CanvasRenderingContext2D) => {
     ctx.beginPath();
     ctx.moveTo(50, 50);
     ctx.lineTo(300, 50);
@@ -218,7 +219,7 @@ new CanvasExample((ctx: CanvasRenderingContext2D) => {
 })
 
 //조절점 두개짜리 커브 그리기
-new CanvasExample((ctx: CanvasRenderingContext2D) => {
+new CanvasExample((_,ctx: CanvasRenderingContext2D) => {
     ctx.beginPath();
     ctx.moveTo(50, 50);
     ctx.lineTo(300, 50);
@@ -226,3 +227,69 @@ new CanvasExample((ctx: CanvasRenderingContext2D) => {
     ctx.lineTo(350, 200);
     ctx.stroke();
 })
+
+//리니어 그라디언트로 내부 채우기
+new CanvasExample((_,ctx: CanvasRenderingContext2D) => {
+    const grad = ctx.createLinearGradient(50, 50, 250, 50); //시작좌표, 종료좌표
+    grad.addColorStop(0, 'red');
+    grad.addColorStop(1 / 6, "orange");
+    grad.addColorStop(2 / 6, "yellow");
+    grad.addColorStop(3 / 6, "green");
+    grad.addColorStop(4 / 6, "aqua");
+    grad.addColorStop(5 / 6, "blue");
+    grad.addColorStop(1, "purple");
+    ctx.lineWidth = 5;
+    ctx.fillStyle = grad; // 만든 그라디언트로 fill 스타일 지정
+    ctx.fillRect(50, 50, 200, 200); // 채우기
+    ctx.strokeRect(50, 50, 200, 200); // 선 그리기
+})
+
+//둥근 그라디언트로 내부 채우기
+new CanvasExample((_,ctx: CanvasRenderingContext2D) => {
+    const grad = ctx.createRadialGradient(0, 0, 0, 100, 100, 300); // 시작좌표, 시작반지름, 끝좌표, 끝 반지름
+    grad.addColorStop(0, 'red');
+    grad.addColorStop(0.5, "yellow");
+    grad.addColorStop(1, "black");
+    ctx.lineWidth = 5;
+    ctx.fillStyle = grad; // 만든 그라디언트로 fill 스타일 지정
+    ctx.fillRect(0, 0, 300, 300); // 채우기
+    ctx.strokeRect(0, 0, 300, 300); // 선 그리기
+})
+
+//패턴으로 사각형 내부 채우기 (패턴 원본 사이즈 조절 못함)
+new CanvasExample(($canvas:HTMLCanvasElement,ctx: CanvasRenderingContext2D) => {
+    const patternImage = new Image();
+    patternImage.src = PATTERN_IMAGE;
+    patternImage.onload = () => {
+        ctx.fillStyle = ctx.createPattern(patternImage, "repeat")!;
+        ctx.fillRect(0, 0, $canvas.width, $canvas.height);
+    }
+})
+
+//패턴 이미지 사이즈 조절해서 사용하기
+new CanvasExample(($canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) => {
+    const patternImage = new Image();
+    patternImage.src = PATTERN_IMAGE;
+
+    // 원하는 패턴 크기를 설정하는 변수를 추가합니다
+    const patternWidth = 200; // 원하는 패턴의 너비
+    const patternHeight = 200; // 원하는 패턴의 높이
+
+    patternImage.onload = () => {
+        // 임시 캔버스를 생성하여 패턴 이미지를 조정합니다
+        const patternCanvas = document.createElement('canvas');
+        const patternCtx = patternCanvas.getContext('2d')!;
+
+        // 패턴 캔버스의 크기를 설정
+        patternCanvas.width = patternWidth;
+        patternCanvas.height = patternHeight;
+
+        // 이미지를 패턴 크기에 맞게 축소하여 그리기
+        patternCtx.drawImage(patternImage, 0, 0, patternWidth, patternHeight);
+
+        // 생성된 패턴을 현재 ctx에 설정
+        ctx.fillStyle = ctx.createPattern(patternCanvas, "repeat")!;
+        // 캔버스 전체에 패턴을 적용
+        ctx.fillRect(0, 0, $canvas.width, $canvas.height);
+    };
+});
