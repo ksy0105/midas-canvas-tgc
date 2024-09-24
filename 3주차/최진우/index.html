@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="./src/images/favicon.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TGC - Canvas</title>
+</head>
+<body>
+<div id="app">
+  <div class="wrap">
+    <strong>3.1 선 그리기</strong>
+    <div class="inner">
+      <div class="box">
+        <div>선 그리기, 사각형 그리기, 내부에 색 채우기, 붉은 색으로 내부 채우기<br/>선의 색을 다른 색으로 채우고 두께 변경하기, 끝부분 처리하기</div>
+        <canvas id="canvas1_1" width="400" height="300">CANVAS를 지원하지 않습니다.</canvas>
+      </div>
+      <div class="box">
+        <div>선의 세 가지 끝부분 처리 방법 알아보기, 선의 꺾인 부분 처리하기<br/>선의 간격을 조정하여 점선 만들기</div>
+        <canvas id="canvas1_2" width="400" height="300">CANVAS를 지원하지 않습니다.</canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <strong>3.2 사각형 그리기</strong>
+    <div class="inner">
+      <div class="box">
+        <div>사각형 그리기, 내부가 채워진 사각형 그리기, 내부를 사각형으로 지우기</div>
+        <canvas id="canvas2_1" width="400" height="300">CANVAS를 지원하지 않습니다.</canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <strong>3.3 원 그리기</strong>
+    <div class="inner">
+      <div class="box">
+        <div>기본 원 그리기</div>
+        <canvas id="canvas3_1" width="400" height="300">CANVAS를 지원하지 않습니다.</canvas>
+      </div>
+      <div class="box">
+        <div>선과 호를 연결하여 라운드 코너 그리기</div>
+        <canvas id="canvas3_2" width="400" height="300">CANVAS를 지원하지 않습니다.</canvas>
+      </div>
+      <div class="box">
+        <div>quadraticCurve 그리기</div>
+        <canvas id="canvas3_3" width="400" height="300">CANVAS를 지원하지 않습니다.</canvas>
+      </div>
+      <div class="box">
+        <div>bezierCurve 그리기</div>
+        <canvas id="canvas3_4" width="400" height="300">CANVAS를 지원하지 않습니다.</canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <strong>3.4 내부 채우기</strong>
+    <div class="inner">
+      <div class="box">
+        <div>gradient로 내부 채우기</div>
+        <canvas id="canvas4_1" width="400" height="300">CANVAS를 지원하지 않습니다.</canvas>
+      </div>
+      <div class="box">
+        <div>radial gradient로 사각형 내부 채우기</div>
+        <canvas id="canvas4_2" width="400" height="300">CANVAS를 지원하지 않습니다.</canvas>
+      </div>
+      <div class="box">
+        <div>패턴으로 사각형 내부 채우기</div>
+        <canvas id="canvas4_3" width="400" height="300">CANVAS를 지원하지 않습니다.</canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <strong>3.5 이미지 그리기</strong>
+    <div class="inner">
+      <div class="box">
+        <div>이미지를 원래 크기대로 그리기</div>
+        <canvas id="canvas5_1" width="400" height="300">CANVAS를 지원하지 않습니다.</canvas>
+      </div>
+      <div class="box">
+        <div>이미지의 크기를 변형하여 그리기</div>
+        <canvas id="canvas5_2" width="400" height="300">CANVAS를 지원하지 않습니다.</canvas>
+      </div>
+      <div class="box">
+        <div>이미지를 잘라 일부만 그리기</div>
+        <canvas id="canvas5_3" width="400" height="300">CANVAS를 지원하지 않습니다.</canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <strong>3.6 글씨 쓰기</strong>
+    <div class="inner">
+      <div class="box">
+        <div>글씨 그리기, 글씨 크기를 크게 변경하기</div>
+        <canvas id="canvas6_1" width="400" height="300">CANVAS를 지원하지 않습니다.</canvas>
+      </div>
+      <div class="box">
+        <div>글씨의 외곽선 그리기</div>
+        <canvas id="canvas6_2" width="400" height="300">CANVAS를 지원하지 않습니다.</canvas>
+      </div>
+      <div class="box">
+        <div>글씨의 좌우정렬 알아보기</div>
+        <canvas id="canvas6_3" width="400" height="300">CANVAS를 지원하지 않습니다.</canvas>
+      </div>
+      <div class="box">
+        <div>글씨의 상하정렬 알아보기</div>
+        <canvas id="canvas6_4" width="400" height="300">CANVAS를 지원하지 않습니다.</canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <strong>3.7 그림자 그리기</strong>
+    <div class="inner">
+      <div class="box">
+        <div>사각형의 그림자 그려보기</div>
+        <canvas id="canvas7_1" width="400" height="300">CANVAS를 지원하지 않습니다.</canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <strong>3.8 이동, 회전, 스케일, 변형하기</strong>
+    <div class="inner">
+      <div class="box">
+        <div>위치 이동시키기</div>
+        <canvas id="canvas8_1" width="400" height="300">CANVAS를 지원하지 않습니다.</canvas>
+      </div>
+      <div class="box">
+        <div>크기 변형하기</div>
+        <canvas id="canvas8_2" width="400" height="300">CANVAS를 지원하지 않습니다.</canvas>
+      </div>
+      <div class="box">
+        <div>회전시키기</div>
+        <canvas id="canvas8_3" width="400" height="300">CANVAS를 지원하지 않습니다.</canvas>
+      </div>
+      <div class="box">
+        <div>사각형 형태 변형하기 - 확대 및 이동</div>
+        <canvas id="canvas8_4" width="400" height="300">CANVAS를 지원하지 않습니다.</canvas>
+      </div>
+      <div class="box">
+        <div>사각형 형태 변형하기 - 기울임 및 이동</div>
+        <canvas id="canvas8_5" width="400" height="300">CANVAS를 지원하지 않습니다.</canvas>
+      </div>
+      <div class="box">
+        <div>사각형 형태 변형하기 - transform 선언 이후 setTransform 선언</div>
+        <canvas id="canvas8_6" width="400" height="300">CANVAS를 지원하지 않습니다.</canvas>
+      </div>
+      <div class="box">
+        <div>사각형 형태 변형하기 - setTransform 선언 이후 transform 선언</div>
+        <canvas id="canvas8_7" width="400" height="300">CANVAS를 지원하지 않습니다.</canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <strong>3.9 색상 보정하기</strong>
+    <div class="inner">
+      <div class="box">
+        <div>캔버스에서 일부분을 가져와서 다른 곳에 출력하기</div>
+        <canvas id="canvas9_1" width="400" height="300">CANVAS를 지원하지 않습니다.</canvas>
+      </div>
+      <div class="box">
+        <div>지정한 부분의 색상을 흑백으로 바꾸어 출력하기</div>
+        <canvas id="canvas9_2" width="400" height="300">CANVAS를 지원하지 않습니다.</canvas>
+      </div>
+      <div class="box">
+        <div>이미지에서 영역을 선택하여 그 부분의 색상 반전시키기</div>
+        <canvas id="canvas9_3" width="400" height="300">CANVAS를 지원하지 않습니다.</canvas>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="module" src="./src/main.ts"></script>
+</body>
+</html>
