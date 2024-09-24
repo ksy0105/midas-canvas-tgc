@@ -396,3 +396,13 @@ new CanvasExample((_,ctx: CanvasRenderingContext2D) => {
     ctx.lineTo(400, 150);
     ctx.stroke();
 })
+
+//그림자 그리기
+new CanvasExample((_,ctx: CanvasRenderingContext2D) => {
+    ctx.shadowColor = "rgba(0, 0, 0, 0.3)";
+    ctx.shadowOffsetX = 5;
+    ctx.shadowOffsetY = 5;
+    ctx.shadowBlur = 3;
+    ctx.fillStyle = "red";
+    ctx.fillRect(50, 50, 100, 100);
+})
