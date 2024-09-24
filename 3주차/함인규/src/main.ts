@@ -500,3 +500,65 @@ new CanvasExample((_,ctx: CanvasRenderingContext2D) => {
     ctx.fillStyle = "red";
     ctx.fillRect(0, 0, 100, 100);
 })
+
+//캔버스에서 일부분 선택해서 이미지로 갖고오기
+new CanvasExample((_,ctx: CanvasRenderingContext2D) => {
+    ctx.fillStyle = "red";
+    ctx.fillRect(20, 30, 100, 100);
+    ctx.fillStyle = "green";
+    ctx.fillRect(50, 50, 100, 100);
+
+    const src = ctx.getImageData(0, 0, 100, 100); // 해당 영역 캡쳐
+    ctx.putImageData(src, 200, 50); // drawImage는 이미지 객체를 캔버스에 그리지만, putImageData는 이미지 데이터(pixel)를 캔버스에 그린다.
+    ctx.strokeRect(0, 0, 100, 100); // 캡쳐한 영역 테두리 그리기
+    ctx.strokeRect(200, 50, 100, 100); //따와서 붙인 영역 테두리 그리기
+})
+
+//지정한 부분의 색상을 흑백으로 바꾸어 출력하기
+new CanvasExample((_,ctx: CanvasRenderingContext2D) => {
+    ctx.fillStyle = "red";
+    ctx.fillRect(20, 30, 100, 100);
+    ctx.fillStyle = "green";
+    ctx.fillRect(50, 50, 100, 100);
+    const src = ctx.getImageData(0, 0, 100, 100); // 해당 영역 캡쳐
+    const pixels = src.data; //픽셀데이터 ([r,g,b,a])
+    const numPixels = pixels.length; //픽셀의 개수 -> 한픽셀당 r,g,b,a 갖고 있음 -> 따라서 픽셀개수*4 가 pixels.length
+
+    // 흑백으로 변경 -> 각 색상 평균값으로 해당 픽셀의 모든 색상을 동일하게 맞춰버리면 흑백?
+    for (let i = 0; i < numPixels; i++) {
+        const avg = (pixels[i*4] + pixels[i*4 + 1] + pixels[i*4 + 2]) / 3; // 해당 픽셀의 각 색상 평균값 찾기
+        pixels[i*4] = avg;
+        pixels[i*4 + 1] = avg;
+        pixels[i*4 + 2] = avg;
+    }
+
+    ctx.putImageData(src, 200, 50); // drawImage는 이미지 객체를 캔버스에 그리지만, putImageData는 이미지 데이터(pixel)를 캔버스에 그린다.
+    ctx.strokeRect(0, 0, 100, 100); // 캡쳐한 영역 테두리 그리기
+    ctx.strokeRect(200, 50, 100, 100); //따와서 붙인 영역 테두리 그리기
+})
+
+//이미지에서 영역 선택하여 그 부분의 색상 반전시키기
+new CanvasExample((_,ctx: CanvasRenderingContext2D) => {
+    const img = new Image();
+    img.src = IMAGE;
+    img.onload = function () {
+        draw(this as HTMLImageElement)
+    }
+
+    function draw(img : HTMLImageElement) {
+        ctx.drawImage(img, 0, 0);
+        const src = ctx.getImageData(0, 0, 100, 100); // 해당 영역 캡쳐
+        const pixels = src.data;
+        const numPixels = pixels.length;
+
+        for (let i = 0; i < numPixels; i+=4) {
+            pixels[i] = 255 - pixels[i];     // Red 반전
+            pixels[i + 1] = 255 - pixels[i + 1]; // Green 반전
+            pixels[i + 2] = 255 - pixels[i + 2]; // Blue 반전
+        }
+
+        ctx.putImageData(src, 200, 50); // drawImage는 이미지 객체를 캔버스에 그리지만, putImageData는 이미지 데이터(pixel)를 캔버스에 그린다.
+        ctx.strokeRect(0, 0, 100, 100); // 캡쳐한 영역 테두리 그리기
+        ctx.strokeRect(200, 50, 100, 100); //따와서 붙인 영역 테두리 그리기
+    }
+})
