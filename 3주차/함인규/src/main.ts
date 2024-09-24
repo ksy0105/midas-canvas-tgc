@@ -206,3 +206,23 @@ new CanvasExample((ctx: CanvasRenderingContext2D) => {
     ctx.lineTo(350, 200);
     ctx.stroke();
 })
+
+//조절점 하나짜리 커브 그리기
+new CanvasExample((ctx: CanvasRenderingContext2D) => {
+    ctx.beginPath();
+    ctx.moveTo(50, 50);
+    ctx.lineTo(300, 50);
+    ctx.quadraticCurveTo(200,100,350,100); //조절점x, 조절점y, 끝나는점x, 끝나는점y
+    ctx.lineTo(350, 200);
+    ctx.stroke();
+})
+
+//조절점 두개짜리 커브 그리기
+new CanvasExample((ctx: CanvasRenderingContext2D) => {
+    ctx.beginPath();
+    ctx.moveTo(50, 50);
+    ctx.lineTo(300, 50);
+    ctx.bezierCurveTo(200,70, 100,150, 350,100);
+    ctx.lineTo(350, 200);
+    ctx.stroke();
+})
