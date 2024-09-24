@@ -1,11 +1,8 @@
+import insertCanvas from "../insertCanvas.ts";
+
+const {ctx} = insertCanvas('canvas3-2-2')
+
 // 내부를 사각형으로 지우기
-
-const ID = 'canvas3-2-2'
-
-document.querySelector<HTMLDivElement>('#app')!.insertAdjacentHTML('beforeend', `<canvas id="${ID}" width="400" height="300"></canvas>`)
-const canvas = document.querySelector<HTMLCanvasElement>(`#${ID}`)!
-const ctx = canvas.getContext('2d')!
-
 ctx.lineWidth = 10;
 ctx.strokeStyle = 'red';
 ctx.fillStyle = 'blue'

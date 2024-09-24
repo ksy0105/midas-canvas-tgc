@@ -1,11 +1,8 @@
+import insertCanvas from "../insertCanvas.ts";
+
+const {ctx} = insertCanvas('canvas3-1-1')
+
 // 사각형 그리기
-
-const ID = 'canvas3-1-1'
-
-document.querySelector<HTMLDivElement>('#app')!.insertAdjacentHTML('beforeend', `<canvas id="${ID}" width="400" height="300"></canvas>`)
-const canvas = document.querySelector<HTMLCanvasElement>(`#${ID}`)!
-const ctx = canvas.getContext('2d')!
-
 ctx.beginPath()
 ctx.moveTo(100, 50)
 ctx.lineTo(300, 50)

@@ -1,11 +1,8 @@
+import insertCanvas from "../insertCanvas.ts";
+
+const {ctx} = insertCanvas('canvas3-1-3')
+
 // 선의 꺾인 부분 처리하기
-
-const ID = 'canvas3-1-3'
-
-document.querySelector<HTMLDivElement>('#app')!.insertAdjacentHTML('beforeend', `<canvas id="${ID}" width="400" height="300"></canvas>`)
-const canvas = document.querySelector<HTMLCanvasElement>(`#${ID}`)!
-const ctx = canvas.getContext('2d')!
-
 ctx.lineWidth = 20
 ctx.strokeStyle = '#0000ff'
 

@@ -1,11 +1,8 @@
+import insertCanvas from "../insertCanvas.ts";
+
+const {ctx} = insertCanvas('canvas3-6-5')
+
 // 글씨의 상하정렬 알아보기
-
-const ID = 'canvas3-6-5'
-
-document.querySelector<HTMLDivElement>('#app')!.insertAdjacentHTML('beforeend', `<canvas id="${ID}" width="400" height="300"></canvas>`)
-const canvas = document.querySelector<HTMLCanvasElement>(`#${ID}`)!
-const ctx = canvas.getContext('2d')!
-
 ctx.fillStyle = '#6495ED'
 ctx.font = 'italic bold 30px Arial, sans-serif'
 ctx.textBaseline = 'top'
