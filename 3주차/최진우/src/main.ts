@@ -7,11 +7,11 @@ const canvas1_1 = document.querySelector<HTMLCanvasElement>('#canvas1_1')!;
 const ctx1_1 = canvas1_1.getContext('2d')!;
 
 ctx1_1.beginPath(); // 선 그리기 시작
-ctx1_1.moveTo(100, 100); // 시작점으로 이동
-ctx1_1.lineTo(300, 100); // 선의 끝점으로 이동
+ctx1_1.moveTo(100, 50); // 시작점으로 이동
+ctx1_1.lineTo(300, 50); // 선의 끝점으로 이동
 ctx1_1.lineTo(300, 200); // 선의 끝점으로 이동
 ctx1_1.lineTo(100, 200); // 선의 끝점으로 이동
-ctx1_1.lineTo(100, 100); // 선의 끝점으로 이동
+ctx1_1.lineTo(100, 50); // 선의 끝점으로 이동
 ctx1_1.lineWidth = 20; // 선 두께 지정
 ctx1_1.strokeStyle = "#00f"; // 선 색 지정
 ctx1_1.lineCap = "square"; // 선 끝부분 정리(butt, round, square)
