@@ -1,0 +1,35 @@
+#app {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+}
+
+.wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .title {
+        font-size: 24px;
+    }
+}
+
+.inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 48px;
+}
+
+.box {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    .desc {
+        white-space: pre-line;
+    }
+
+    .canvas {
+        border: 1px solid black;
+    }
+}
