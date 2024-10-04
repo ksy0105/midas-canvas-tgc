@@ -59,6 +59,7 @@ const 백그라운드_이미지_애니메이션_만들기 = () => {
     x -= 1;
     if (x <= -CANVAS_WIDTH) x = 0;
     ctx.drawImage(bgImage, x, 0);
+    ctx.drawImage(bgImage, x + CANVAS_WIDTH, 0);
   }
   setInterval(animate, 30);
 };
