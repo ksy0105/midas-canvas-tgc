@@ -89,13 +89,13 @@ const execute3_6_5 = (containerId: string) => {
 const execute3_6 = () => {
     const id = 'chapter3_6'
 
-    makeCanvasContainer(id, '3.6. 글씨 쓰기');
-
-    execute3_6_1(id);
-    execute3_6_2(id);
-    execute3_6_3(id);
-    execute3_6_4(id);
-    execute3_6_5(id);
+    makeCanvasContainer(id, '3.6. 글씨 쓰기', () => {
+        execute3_6_1(id);
+        execute3_6_2(id);
+        execute3_6_3(id);
+        execute3_6_4(id);
+        execute3_6_5(id);
+    });
 }
 
 export default execute3_6;
