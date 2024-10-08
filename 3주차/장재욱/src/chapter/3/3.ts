@@ -47,12 +47,12 @@ const execute3_3_4 = (containerId: string) => {
 const execute3_3 = () => {
     const id = 'chapter3_3'
 
-    makeCanvasContainer(id, '3.3. 원 그리기');
-
-    execute3_3_1(id);
-    execute3_3_2(id);
-    execute3_3_3(id);
-    execute3_3_4(id);
+    makeCanvasContainer(id, '3.3. 원 그리기', () => {
+        execute3_3_1(id);
+        execute3_3_2(id);
+        execute3_3_3(id);
+        execute3_3_4(id);
+    });
 }
 
 export default execute3_3;

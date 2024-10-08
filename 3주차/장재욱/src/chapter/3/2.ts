@@ -38,11 +38,11 @@ const execute3_2_3 = (containerId: string) => {
 const execute3_2 = () => {
     const id = 'chapter3_2'
 
-    makeCanvasContainer(id, '3.2. 사각형 그리기');
-
-    execute3_2_1(id);
-    execute3_2_2(id);
-    execute3_2_3(id);
+    makeCanvasContainer(id, '3.2. 사각형 그리기', () => {
+        execute3_2_1(id);
+        execute3_2_2(id);
+        execute3_2_3(id);
+    });
 }
 
 export default execute3_2;
