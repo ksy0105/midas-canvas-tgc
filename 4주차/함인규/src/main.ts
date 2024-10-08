@@ -9,6 +9,7 @@ import example3_13_1_1 from "./@examples/example3_13_1_1.ts";
 import example3_13_1_2 from "./@examples/example3_13_1_2.ts";
 import example3_14_1 from "./@examples/example3_14_1.ts";
 import example3_14_2 from "./@examples/example3_14_2.ts";
+import example3_15_1 from "./@examples/example3_15_1.ts";
 
 
 example3_10_1.ready().execute();
@@ -21,3 +22,4 @@ example3_13_1_1.ready().execute();
 example3_13_1_2.ready().execute();
 example3_14_1.ready().execute();
 example3_14_2.ready().execute();
+example3_15_1.ready().execute()
