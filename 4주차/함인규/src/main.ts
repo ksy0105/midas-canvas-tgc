@@ -11,9 +11,9 @@ import example3_14_1 from "./@examples/example3_14_1.ts";
 import example3_14_2 from "./@examples/example3_14_2.ts";
 import example3_15_1 from "./@examples/example3_15_1.ts";
 import example3_15_2 from "./@examples/example3_15_2.ts";
-import example3_15_3 from "./@examples/example3_15_3.ts";
 import example3_16_1 from "./@examples/example3_16_1.ts";
-import example3_16_2 from "./@examples/example3_16_2.ts";
+import example3_17_2 from "./@examples/example3_17_2.ts";
+import example3_17_3 from "./@examples/example3_17_3.ts";
 
 
 example3_10_1.ready().execute();
@@ -28,6 +28,6 @@ example3_14_1.ready().execute();
 example3_14_2.ready().execute();
 example3_15_1.ready().execute();
 example3_15_2.ready().execute();
-example3_15_3.ready().execute();
 example3_16_1.ready().execute();
-example3_16_2.ready().execute();
+example3_17_2.ready().execute();
+example3_17_3.ready().execute();
