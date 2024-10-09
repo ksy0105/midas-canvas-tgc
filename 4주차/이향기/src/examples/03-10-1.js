@@ -1,6 +1,6 @@
-import getContext from "../get-context.js";
+import getCanvas from "../get-canvas.js";
 
-const ctx = getContext('03-10-1');
+const { ctx } = getCanvas('03-10-1');
 
 ctx.fillStyle = 'rgba(63, 169, 245, 1)';
 ctx.fillRect(20, 20, 100, 100);

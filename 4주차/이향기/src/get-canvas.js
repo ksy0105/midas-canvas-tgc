@@ -1,4 +1,4 @@
-export default function getContext(id) {
+export default function getCanvas(id) {
     const canvas = document.createElement('canvas');
     canvas.setAttribute('id', id);
     canvas.setAttribute('width', '400');
@@ -6,5 +6,6 @@ export default function getContext(id) {
     canvas.setAttribute('style', 'border: 1px solid black;');
     canvas.textContent = 'CANVAS를 지원하지 않습니다.';
     document.querySelector('#app').append(canvas);
-    return canvas.getContext('2d');
+    const ctx = canvas.getContext('2d');
+    return {canvas, ctx};
 };
