@@ -17,6 +17,7 @@ import example3_17_3 from "./@examples/example3_17_3.ts";
 import example3_17_4 from "./@examples/example3_17_4.ts";
 import example3_17_5 from "./@examples/example3_17_5.ts";
 import example3_17_6 from "./@examples/example3_17_6.ts";
+import example3_17_7 from "./@examples/example3_17_7.ts";
 
 
 example3_10_1.ready().execute();
@@ -37,3 +38,4 @@ example3_17_3.ready().execute();
 example3_17_4.ready().execute();
 example3_17_5.ready().execute();
 example3_17_6.ready().execute();
+example3_17_7.ready().execute();
