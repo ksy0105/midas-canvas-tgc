@@ -9,47 +9,80 @@ const ImageAnimation = () => {
     h: 0,
   });
 
+  const bgImageRef = useRef<HTMLImageElement | null>(null);
+  const fighterImageRef = useRef<HTMLImageElement | null>(null);
+  const isBgLoadedRef = useRef(false);
+  const isFighterLoadedRef = useRef(false);
+
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    const bgImage = new Image();
+    const fighterImage = new Image();
+    const SPEED = 5;
+
+    let bgX = 0;
 
     canvas.width = 400;
     canvas.height = 300;
 
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    const bgImage = new Image();
     bgImage.src = "space_repeat.jpg";
-    let bgX = 0;
+    bgImageRef.current = bgImage;
+    isBgLoadedRef.current = true;
 
-    const fighterImage = new Image();
     fighterImage.src = "fighter.png";
+    fighterImageRef.current = fighterImage;
+    isFighterLoadedRef.current = true;
+    playerRef.current.w = fighterImage.width / 2;
+    playerRef.current.h = fighterImage.height / 2;
 
-    fighterImage.onload = () => {
-      playerRef.current.w = fighterImage.width / 2;
-      playerRef.current.h = fighterImage.height / 2;
-
-      const animate = () => {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        ctx.drawImage(bgImage, bgX--, 0);
-        if (bgX <= -bgImage.width / 2) {
-          bgX = 0;
-        }
-
-        ctx.drawImage(
-          fighterImage,
-          playerRef.current.x,
-          playerRef.current.y,
-          playerRef.current.w,
-          playerRef.current.h
-        );
-        requestAnimationFrame(animate);
-      };
-      animate();
+    const update = (key: string) => {
+      if (key === "w" || key === "W") {
+        playerRef.current.y -= SPEED;
+      } else if (key === "s" || key === "S") {
+        playerRef.current.y += SPEED;
+      } else if (key === "a" || key === "A") {
+        playerRef.current.x -= SPEED;
+      } else if (key === "d" || key === "D") {
+        playerRef.current.x += SPEED;
+      }
     };
-  }, []);
+
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      if (!isBgLoadedRef.current || !bgImageRef.current) return;
+      ctx.drawImage(bgImageRef.current, bgX--, 0);
+
+      if (bgX <= -bgImageRef.current.width / 2) {
+        bgX = 0;
+      }
+
+      if (!isFighterLoadedRef.current || !fighterImageRef.current) return;
+
+      ctx.drawImage(
+        fighterImageRef.current,
+        playerRef.current.x,
+        playerRef.current.y,
+        playerRef.current.w,
+        playerRef.current.h
+      );
+      requestAnimationFrame(animate);
+    };
+
+    animate();
+
+    window.addEventListener("keydown", (e) => {
+      update(e.key);
+    });
+    return () => {
+      window.removeEventListener("keydown", (e) => {
+        update(e.key);
+      });
+    };
+  });
 
   return (
     <>
