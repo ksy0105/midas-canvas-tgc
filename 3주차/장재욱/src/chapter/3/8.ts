@@ -103,15 +103,15 @@ const execute3_8_7 = (containerId: string) => {
 const execute3_8 = () => {
     const id = 'chapter3_8'
 
-    makeCanvasContainer(id, '3.8. 이동, 회전, 스케일, 변형하기');
-
-    execute3_8_1(id);
-    execute3_8_2(id);
-    execute3_8_3(id);
-    execute3_8_4(id);
-    execute3_8_5(id);
-    execute3_8_6(id);
-    execute3_8_7(id);
+    makeCanvasContainer(id, '3.8. 이동, 회전, 스케일, 변형하기', () => {
+        execute3_8_1(id);
+        execute3_8_2(id);
+        execute3_8_3(id);
+        execute3_8_4(id);
+        execute3_8_5(id);
+        execute3_8_6(id);
+        execute3_8_7(id);
+    });
 }
 
 export default execute3_8;

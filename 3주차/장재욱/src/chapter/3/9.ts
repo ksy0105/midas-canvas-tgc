@@ -71,11 +71,11 @@ const execute3_9_3 = (containerId: string) => {
 const execute3_9 = () => {
     const id = 'chapter3_9'
 
-    makeCanvasContainer(id, '3.9. 색상 보정하기');
-
-    execute3_9_1(id);
-    execute3_9_2(id);
-    execute3_9_3(id);
+    makeCanvasContainer(id, '3.9. 색상 보정하기', () => {
+        execute3_9_1(id);
+        execute3_9_2(id);
+        execute3_9_3(id);
+    });
 }
 
 export default execute3_9;

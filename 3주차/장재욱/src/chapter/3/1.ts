@@ -173,17 +173,17 @@ const execute3_1_9 = (containerId: string) => {
 const execute3_1 = () => {
     const id = 'chapter3_1'
 
-    makeCanvasContainer(id, '3.1. 선그리기');
-
-    execute3_1_1(id);
-    execute3_1_2(id);
-    execute3_1_3(id);
-    execute3_1_4(id);
-    execute3_1_5(id);
-    execute3_1_6(id);
-    execute3_1_7(id);
-    execute3_1_8(id);
-    execute3_1_9(id);
+    makeCanvasContainer(id, '3.1. 선그리기', () => {
+        execute3_1_1(id);
+        execute3_1_2(id);
+        execute3_1_3(id);
+        execute3_1_4(id);
+        execute3_1_5(id);
+        execute3_1_6(id);
+        execute3_1_7(id);
+        execute3_1_8(id);
+        execute3_1_9(id);
+    }, true);
 }
 
 export default execute3_1;

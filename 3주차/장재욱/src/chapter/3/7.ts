@@ -15,9 +15,10 @@ const execute3_7_1 = (containerId: string) => {
 const execute3_7 = () => {
     const id = 'chapter3_7'
 
-    makeCanvasContainer(id, '3.7. 그림자 그리기');
+    makeCanvasContainer(id, '3.7. 그림자 그리기', () => {
+        execute3_7_1(id);
+    });
 
-    execute3_7_1(id);
 }
 
 export default execute3_7;
