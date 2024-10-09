@@ -1,10 +1,10 @@
 import './App.css';
-import ImageAnimationWithPlaneMove from './canvasScript/canvas_03_14_2';
+import MissileEnemyConflict from './canvasScript/canvas_03_17_7';
 
 function App() {
 
     return (
-        <ImageAnimationWithPlaneMove/>
+        <MissileEnemyConflict/>
     );
 }
 
