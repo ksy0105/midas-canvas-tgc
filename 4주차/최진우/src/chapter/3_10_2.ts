@@ -47,19 +47,19 @@ const datas = [
     }
 ];
 
-const draw = (subTitle: string, canvasId: string, index: number, value: any) => {
-    const {ctx} = initCanvas(subTitle, `${canvasId}_${index+1}`);
+const draw = (subTitle: string, id: string, canvasId: string, index: number, value: any) => {
+    const {ctx} = initCanvas(subTitle, id, `${canvasId}_${index+1}`);
 
-    ctx.fillStyle = "red";
+    ctx.fillStyle = 'red';
     ctx.fillRect(20, 20, 100, 100);
     ctx.globalCompositeOperation = value;
-    ctx.fillStyle = "blue";
+    ctx.fillStyle = 'blue';
     ctx.fillRect(50, 50, 100, 100);
 }
 
-const draw3_10_2 = (subTitle: string, canvasId: string) => {
+const draw3_10_2 = (subTitle: string, id: string, canvasId: string) => {
     datas.map((data, index) => {
-        draw(`${subTitle}: ${data.value}\n${data.desc}`, canvasId, index, data.value);
+        draw(`${subTitle}: ${data.value}\n${data.desc}`, id, canvasId, index, data.value);
     });
 };
 

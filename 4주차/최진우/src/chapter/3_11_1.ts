@@ -1,13 +1,23 @@
 import {initCanvas} from '../common.ts';
 
-const draw3_11_1 = (subTitle: string, canvasId: string) => {
-    const {ctx} = initCanvas(subTitle, canvasId);
+const draw3_11_1 = (subTitle: string, id: string, canvasId: string) => {
+    const {canvas, ctx} = initCanvas(subTitle, id, canvasId);
+    const ctxW = canvas.width;
+    const ctxH = canvas.height;
+    let x = 0;
 
-    ctx.fillStyle = "rgba(63, 169, 245, 1)";
-    ctx.fillRect(20, 20, 100, 100);
-    ctx.globalAlpha = 0.5; // globalAlpha 값 지정 이후 요소들은 모두 알파값 적용됨
-    ctx.fillStyle = "blue";
-    ctx.fillRect(50, 50, 100, 100);
+    const animate = () => {
+        ctx.clearRect(0, 0, ctxW, ctxH);
+        ctx.fillStyle = 'red';
+        ctx.fillRect(x, 10, 50, 50);
+        x++;
+
+        if (x > ctxW - 50) {
+            x = 0;
+        }
+    };
+
+    setInterval(animate, 30);
 };
 
 export default draw3_11_1;
