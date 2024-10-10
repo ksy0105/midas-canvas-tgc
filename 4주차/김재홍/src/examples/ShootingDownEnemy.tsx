@@ -131,8 +131,14 @@ const ShootingDownEnemy = () => {
       delete keysDownRef.current[e.key];
     };
 
-    window.addEventListener("keydown", handleKeyDown);
-    window.addEventListener("keyup", handleKeyUp);
+    window.addEventListener("keydown", (e) => {
+      e.preventDefault();
+      handleKeyDown(e);
+    });
+    window.addEventListener("keyup", (e) => {
+      e.preventDefault();
+      handleKeyUp(e);
+    });
 
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
