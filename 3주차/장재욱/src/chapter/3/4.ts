@@ -47,11 +47,11 @@ const execute3_4_3 = (containerId: string) => {
 const execute3_4 = () => {
     const id = 'chapter3_4'
 
-    makeCanvasContainer(id, '3.4. 내부 채우기');
-
-    execute3_4_1(id);
-    execute3_4_2(id);
-    execute3_4_3(id);
+    makeCanvasContainer(id, '3.4. 내부 채우기', () => {
+        execute3_4_1(id);
+        execute3_4_2(id);
+        execute3_4_3(id);
+    });
 }
 
 export default execute3_4;
