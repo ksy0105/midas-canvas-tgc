@@ -4,7 +4,8 @@ import MoveRectXAxis from "./examples/MoveRectXAxis";
 import GetCoordOnClick from "./examples/GetCoordOnClick";
 import ImageAnimation from "./examples/ImageAnimation";
 import JsonObjectArray from "./examples/JsonObjectArray";
-import CheckMouseCollision from "./examples/checkMouseCollision";
+import CheckMouseCollision from "./examples/CheckMouseCollision";
+import ShootingDownEnemy from "./examples/ShootingDownEnemy";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <ImageAnimation />
       <JsonObjectArray />
       <CheckMouseCollision />
+      <ShootingDownEnemy />
     </>
   );
 }

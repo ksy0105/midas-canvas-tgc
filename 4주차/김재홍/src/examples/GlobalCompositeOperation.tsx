@@ -6,13 +6,11 @@ const GlobalCompositeOperation = () => {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    const ctx = canvas?.getContext("2d");
+    if (!canvas || !ctx) return;
 
     canvas.width = 400;
     canvas.height = 300;
-
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
 
     ctx.fillStyle = "red";
     ctx.fillRect(20, 20, 100, 100);

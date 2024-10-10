@@ -8,15 +8,14 @@ const MoveRectXAxis = () => {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    const ctx = canvas?.getContext("2d");
+    if (!ctx || !canvas) return;
+
     canvas.width = 400;
     canvas.height = 300;
 
     const canvasWidth = canvas.width;
     const canvasHeight = canvas.height;
-
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
 
     // let x = 0;
     // let y = 0;

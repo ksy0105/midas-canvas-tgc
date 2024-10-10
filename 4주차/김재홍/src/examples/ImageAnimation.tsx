@@ -11,32 +11,30 @@ const ImageAnimation = () => {
 
   const bgImageRef = useRef<HTMLImageElement | null>(null);
   const fighterImageRef = useRef<HTMLImageElement | null>(null);
-  const isBgLoadedRef = useRef(false);
-  const isFighterLoadedRef = useRef(false);
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+    const ctx = canvas?.getContext("2d");
+    if (!canvas || !ctx) return;
+
+    canvas.width = 400;
+    canvas.height = 300;
+
     const bgImage = new Image();
     const fighterImage = new Image();
     const SPEED = 5;
 
     let bgX = 0;
 
-    canvas.width = 400;
-    canvas.height = 300;
-
     bgImage.src = "space_repeat.jpg";
     bgImageRef.current = bgImage;
-    isBgLoadedRef.current = true;
 
     fighterImage.src = "fighter.png";
     fighterImageRef.current = fighterImage;
-    isFighterLoadedRef.current = true;
-    playerRef.current.w = fighterImage.width / 2;
-    playerRef.current.h = fighterImage.height / 2;
+    fighterImage.onload = function () {
+      playerRef.current.w = fighterImage.width / 2;
+      playerRef.current.h = fighterImage.height / 2;
+    };
 
     const update = (key: string) => {
       if (key === "w" || key === "W") {
@@ -53,15 +51,14 @@ const ImageAnimation = () => {
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      if (!isBgLoadedRef.current || !bgImageRef.current) return;
+      if (!bgImageRef.current) return;
       ctx.drawImage(bgImageRef.current, bgX--, 0);
 
       if (bgX <= -bgImageRef.current.width / 2) {
         bgX = 0;
       }
 
-      if (!isFighterLoadedRef.current || !fighterImageRef.current) return;
-
+      if (!fighterImageRef.current) return;
       ctx.drawImage(
         fighterImageRef.current,
         playerRef.current.x,
