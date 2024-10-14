@@ -1,54 +1,46 @@
-import {useEffect, useRef, useState} from "react";
-import CanvasComponent from "../../CanvasComponent.tsx";
+import {useEffect, useState} from "react";
 import PlayerVO, {MissileVO} from "./vo/PlayerVO.tsx";
 import EnemyListVO from "./vo/EnemyVO.tsx";
+import {useCanvas} from "../../../hooks/useCanvas.ts";
 
 let animateInterval: number | null = null;
 
 const ShootingCollision = () => {
     const speed = 5;
-
-    const ref = useRef<HTMLCanvasElement>(null);
-
+    const canvasWidth = 500;
+    const canvasHeight = 500;
 
     const enemyList = new EnemyListVO();
     const [player, setPlayer] = useState(new PlayerVO());
-    const [ctxObj, setCtxObj] = useState<CanvasRenderingContext2D | null>(null);
 
-    const gameOver = () => {
-        if(!ctxObj || !ref.current) return;
-        const canW = ref.current.width;
-        const canH = ref.current.height;
+    const gameOver = (ctx: CanvasRenderingContext2D) => {
+        if(!ctx) return;
 
         if(animateInterval) {
             clearInterval(animateInterval);
         }
 
-        ctxObj.font = 'bold 30px Arial, sans-serif';
-        ctxObj.fillStyle = '#FC0';
-        ctxObj.textAlign = 'center';
+        ctx.font = 'bold 30px Arial, sans-serif';
+        ctx.fillStyle = '#FC0';
+        ctx.textAlign = 'center';
 
-        ctxObj.fillText('you win', canW * 0.5, canH * 0.5);
+        ctx.fillText('you win', canvasWidth * 0.5, canvasHeight * 0.5);
     }
 
-    const animate = () => {
-        if(!ctxObj || !ref.current) return;
+    const animate = (ctx: CanvasRenderingContext2D) => {
+        if(!ctx) return;
 
-        ctxObj.clearRect(0, 0, ref.current.width, ref.current.height);
-        player.render(ctxObj, enemyList);
+        ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+        player.render(ctx, enemyList);
 
         if(enemyList.enemies.length === 0) {
-            gameOver();
+            gameOver(ctx);
         } else {
-            enemyList.render(ctxObj, 0.5);
+            enemyList.render(ctx, 0.5);
         }
     }
 
     const update = (code: string) => {
-        if(!ref.current) return;
-
-        const canW = ref.current.width;
-
         switch (code) {
             case  'z':
                 player.x -= speed;
@@ -61,8 +53,8 @@ const ShootingCollision = () => {
         // 화면 밖으로 나가는 것 방지 코드
         if(player.x < 0) {
             player.x = 0;
-        } else if(player.x > (canW - player.w)) {
-            player.x = canW - player.w;
+        } else if(player.x > (canvasWidth - player.w)) {
+            player.x = canvasWidth - player.w;
         }
 
         if(code === ' '){
@@ -75,10 +67,6 @@ const ShootingCollision = () => {
         }
 
         setPlayer(new PlayerVO(player));
-    }
-
-    const draw = (ctx: CanvasRenderingContext2D) => {
-        setCtxObj(ctx);
     }
 
     useEffect(() => {
@@ -97,24 +85,10 @@ const ShootingCollision = () => {
         }
     }, []);
 
-    useEffect(() => {
-        if(ctxObj){
-            animateInterval = setInterval(animate, 30);
-        }
-    }, [ctxObj]);
-
-    useEffect(() => {
-        if(ref.current) {
-            player.init(ref.current.width);
-            setPlayer(player);
-        }
-    }, [ref.current]);
+    const ref = useCanvas(canvasWidth, canvasHeight, animate);
 
     return (
-        <div style={{display: 'flex', flexDirection: 'column'}}>
-            <strong style={{fontSize: 20}}> z: 왼쪽 이동 x: 오른쪽 이동, 스페이스바: 미사일</strong>
-            <CanvasComponent draw={draw} ref={ref}/>
-        </div>
+        <canvas ref={ref}/>
     );
 }
 
