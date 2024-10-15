@@ -1,0 +1,9 @@
+#app {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+canvas {
+  border: 1px solid black;
+}
