@@ -4,7 +4,7 @@ const draw3_17_3 = (subTitle: string, id: string, canvasId: string) => {
     const {canvas, ctx} = initCanvas(subTitle, id, canvasId);
     const canW = canvas.width;
     const canH = canvas.height;
-    let keysDown = {};
+    let keysDown: { [key: string]: boolean } = {};
 
     // 적기 이미지
     const enemyImg = new Image();

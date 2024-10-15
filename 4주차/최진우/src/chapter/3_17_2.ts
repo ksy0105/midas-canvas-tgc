@@ -5,7 +5,7 @@ const draw3_17_2 = (subTitle: string, id: string, canvasId: string) => {
     const canW = canvas.width;
     const canH = canvas.height;
     const speed = 5;
-    let keysDown = {};
+    let keysDown: { [key: string]: boolean } = {};
 
     // 비행기 이미지
     const playerImg = new Image();

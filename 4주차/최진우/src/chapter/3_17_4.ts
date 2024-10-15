@@ -4,7 +4,7 @@ const draw3_17_4 = (subTitle: string, id: string, canvasId: string) => {
     const {canvas, ctx} = initCanvas(subTitle, id, canvasId);
     const canW = canvas.width;
     const canH = canvas.height;
-    let keysDown = {};
+    let keysDown: { [key: string]: boolean } = {};
 
     // 배경 이미지
     const bgImg = new Image();
