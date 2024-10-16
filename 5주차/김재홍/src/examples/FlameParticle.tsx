@@ -18,12 +18,6 @@ const FlameParticle = () => {
 
     const ctxW = canvas.width;
     const ctxH = canvas.height;
-    // let x = ctxW / 2;
-    // let y = ctxH / 2;
-
-    // 초속도
-    // let vx = 10;
-    // let vy = -10;
 
     const particles: Particle[] = [];
     const TOTAL_COUNT = 30;
@@ -52,13 +46,15 @@ const FlameParticle = () => {
       particles.forEach((particle, idx) => {
         ctx.beginPath();
 
-        const grad = ctx.createLinearGradient(100, 0, 300, 0);
+        const grad = ctx.createLinearGradient(50, 0, 350, 0);
 
         grad.addColorStop(0, "white");
-        grad.addColorStop(0.25, "yellow");
-        grad.addColorStop(0.5, "red");
-        grad.addColorStop(0.75, "purple");
-        grad.addColorStop(1, "blue");
+        grad.addColorStop(0.1, "orange");
+        grad.addColorStop(0.4, "red");
+        grad.addColorStop(0.5, "brown");
+        grad.addColorStop(0.6, "red");
+        grad.addColorStop(0.9, "orange");
+        grad.addColorStop(1, "white");
 
         // ctx.fillStyle = "white";
         ctx.fillStyle = grad;
@@ -68,7 +64,22 @@ const FlameParticle = () => {
 
         particle.vy += GRAVITY;
 
-        ctx.arc(x, y, particle.size, 0, Math.PI * 2);
+        // ctx.arc(x, y, particle.size, 0, Math.PI * 2);
+        // 파티클 가운데서 시작
+        ctx.moveTo(particle.x, particle.y);
+
+        // 불규칙한 곡선을 그려서 불꽃 모양을 만듦
+        for (let i = 0; i < 6; i++) {
+          const angle = Math.random() * Math.PI * 2;
+          const distance = Math.random() * particle.size * 2; // 불규칙한 움직임
+          const x = particle.x + Math.cos(angle) * distance;
+          const y = particle.y + Math.sin(angle) * distance;
+          ctx.lineTo(x, y);
+        }
+
+        // 경로 닫기
+        ctx.closePath();
+
         ctx.fill();
 
         if (particle.y > ctxH) {
