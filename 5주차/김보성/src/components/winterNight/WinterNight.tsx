@@ -9,7 +9,7 @@ interface ISnow {
 
 let snowMakes: ISnow[] = [];
 
-const WinterNight = () => {
+const WinterParticleNight = () => {
     // 이미지 로드 확인용
     const [isImgLoaded, setIsImgLoaded] = useState(false);
 
