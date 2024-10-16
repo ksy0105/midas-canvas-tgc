@@ -1,16 +1,16 @@
 // src/components/CanvasGallery.jsx
 import { useState } from "react";
-import Canvas3_10 from "./Canvas4/Canvas3_10";
-import Canvas3_11 from "./Canvas4/Canvas3_11";
-import Canvas3_12 from "./Canvas4/Canvas3_12";
+import Canvas3_20 from "./Canvas5/Canvas3_20";
+import Canvas3_20_2 from "./Canvas5/Canvas3_20_2";
+import Canvas3_20_3 from "./Canvas5/Canvas3_20_3";
 
 const CanvasGallery = () => {
   const [currentCanvasIndex, setCurrentCanvasIndex] = useState(0);
 
   const canvasComponents = [
-    <Canvas3_10 key={1} />,
-    <Canvas3_11 />,
-    <Canvas3_12 />,
+    <Canvas3_20 key={1} />,
+    <Canvas3_20_2 />,
+    <Canvas3_20_3 />,
   ];
 
   const nextCanvas = () => {

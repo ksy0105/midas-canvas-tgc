@@ -3,9 +3,13 @@ import React, { useRef, useEffect } from "react";
 
 interface CanvasComponentProps {
   draw: (ctx: CanvasRenderingContext2D) => void;
+  onCanvasReady?: (canvas: HTMLCanvasElement) => void; // canvas를 부모에게 전달하는 콜백
 }
 
-const CanvasComponent: React.FC<CanvasComponentProps> = ({ draw }) => {
+const CanvasComponent: React.FC<CanvasComponentProps> = ({
+  draw,
+  onCanvasReady,
+}) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
@@ -16,7 +20,12 @@ const CanvasComponent: React.FC<CanvasComponentProps> = ({ draw }) => {
     if (!ctx) return;
 
     draw(ctx);
-  }, [draw]);
+
+    // canvas가 준비되면 부모 컴포넌트에 전달
+    if (onCanvasReady) {
+      onCanvasReady(canvas);
+    }
+  }, [draw, onCanvasReady]);
 
   return (
     <canvas
