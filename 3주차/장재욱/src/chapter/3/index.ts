@@ -15,6 +15,9 @@ import execute3_14 from "./14.ts";
 import execute3_15 from "./15.ts";
 import execute3_16 from "./16.ts";
 import execute3_17 from "./17.ts";
+import execute3_18 from "./18.ts";
+import execute3_19 from "./19.ts";
+import execute3_20 from "./20.ts";
 
 const execute3 = () => {
     execute3_1();
@@ -50,6 +53,12 @@ const execute3 = () => {
     execute3_16();
 
     execute3_17();
+
+    execute3_18();
+
+    execute3_19();
+
+    execute3_20();
 }
 
 export default execute3;
