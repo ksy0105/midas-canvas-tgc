@@ -1,10 +1,10 @@
-import Particle from "./component/particle"
+import FireParticle from "./component/fireParticle.tsx";
 
 function App() {
 
   return (
     <>
-      <Particle/>
+      <FireParticle/>
     </>
   )
 }
