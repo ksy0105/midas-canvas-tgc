@@ -1,0 +1,31 @@
+#app {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+canvas {
+  border: 1px solid black;
+}
+
+#audio_player {
+  position: relative;
+  width: 400px;
+  height: 200px;
+  background: #000;
+}
+
+#audio_box > audio {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  bottom: 16px;
+  width: 300px;
+}
+
+#audio_canvas {
+  position: absolute;
+  top: 16px;
+  border: none;
+}
