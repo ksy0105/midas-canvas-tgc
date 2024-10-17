@@ -4,7 +4,7 @@ const {ctx} = insertCanvas('canvas3-9-3')
 
 // 이미지에서 영역을 선택하여 그 부분의 색상 반전시키기
 const img = new Image()
-img.src = "image02.png"
+img.src = "image01.png"
 img.onload = function() {
     ctx.drawImage(this as CanvasImageSource, 0, 0)
     const src = ctx.getImageData(250, 100, 100, 100)
