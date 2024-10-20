@@ -6,7 +6,6 @@ export class Laser {
   img;
   speed = 5;
 
-  point: Position;
   boundingBox: BoundingBox;
 
   constructor(ctx: CanvasRenderingContext2D, point: Position) {
@@ -15,16 +14,20 @@ export class Laser {
     this.img = new Image();
     this.img.src = "images/laser.png";
 
-    this.point = point;
-    this.boundingBox = new BoundingBox(this.img.width, this.img.height);
+    this.boundingBox = new BoundingBox(
+      point.x,
+      point.y,
+      this.img.width,
+      this.img.height
+    );
   }
 
   move() {
-    this.point.x += this.speed;
+    this.boundingBox.x += this.speed;
   }
 
   render() {
     this.move.call(this);
-    this.ctx.drawImage(this.img, this.point.x, this.point.y);
+    this.ctx.drawImage(this.img, this.boundingBox.x, this.boundingBox.y);
   }
 }
