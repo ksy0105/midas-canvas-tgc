@@ -1,6 +1,6 @@
 import { CANVAS_WIDTH, CANVAS_HEIGHT } from "./global.config";
 import { Background } from "./Objects/Background";
-import { Fighter } from "./Objects/Fighter";
+import { Fighter } from "./Objects/Fighter/Fighter";
 
 class Game {
   $canvas: HTMLCanvasElement;
