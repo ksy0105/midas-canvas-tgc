@@ -12,6 +12,7 @@ export default class FighterVO {
     speed: number;
     ctxW: number;
     ctxH : number;
+    fighterExplosion: boolean = false;
 
     constructor(vo: IFighterVO) {
         this.x = vo.x;
@@ -19,6 +20,19 @@ export default class FighterVO {
         this.speed = vo.speed;
         this.ctxW = vo.ctxW;
         this.ctxH = vo.ctxH;
+    }
+
+    moveX() {
+        this.x += 10;
+    }
+
+    setFighterExplosion(bool: boolean) {
+        this.fighterExplosion = bool;
+    }
+
+    reset() {
+        this.x = 0;
+        this.y = this.ctxH / 2;
     }
 
     update = (code: string) =>{

@@ -6,6 +6,11 @@ import {useKeydownEvent} from "../hooks/useKeyBoadEvents";
 import BackgroundVO from "./vo/BackgroundVO.ts";
 import AsteroidVO from "./vo/AsteroidVO.ts";
 import HitExplosionVO from "./vo/HitExplosionVO.ts";
+import SoundButton from "./SoundButton.tsx";
+import {useEffect, useRef, useState} from "react";
+import Lives from "./Lives.tsx";
+import Score from "./Score.tsx";
+import GameOVer from "./GameOVer.tsx";
 
 // 캔버스 사이즈
 const ctxW = 600;
@@ -14,7 +19,7 @@ const ctxH = 400;
 // 비행기 객체
 const fighter = new FighterVO({
     x: 50,
-    y: 400 / 2,
+    y: ctxH / 2,
     speed: 5,
     ctxW,
     ctxH
@@ -47,8 +52,57 @@ let lastUpdateTime = Date.now();
 let acDelta = 0;
 let msPerFrame = 100;
 
+let lives = 2;
+let score = 0;
+
 const Shooter = () => {
     const { isCompleted, bgImg, fighterImg, laserImg, asteroidImg, explodeImg } = useLoadImage();
+
+    const [isGameOver, setIsGameOver] = useState(false);
+
+    const livesRef = useRef<HTMLSpanElement>(null);
+    const scoreRef = useRef<HTMLSpanElement>(null);
+
+    // 레이저 사운드
+    const playLaserSound = () => {
+        const sound = new Audio('/sounds/Laser.wav');
+        sound.volume = 0.12;
+        sound.load();
+        sound.play();
+    };
+
+    //  비행기 충돌 사운드
+    const playExplosionSound = () => {
+        const sound = new Audio('/sounds/explosion.wav');
+        sound.load();
+        sound.play();
+    };
+
+    // 레이저 - 운석 충돌 사운드
+    const playHitExplosionSound = () => {
+        const sound = new Audio('/sounds/explosion-02.wav');
+        sound.volume = 0.5;
+        sound.load();
+        sound.play();
+    };
+
+    const gameOver = () => {
+        setIsGameOver(true);
+    }
+
+    const reStart = () => {
+        setIsGameOver(false);
+
+        lives = 2;
+        score = 0;
+
+        if(livesRef.current) {
+            livesRef.current.innerText = `${lives}`;
+        }
+        if(scoreRef.current) {
+            scoreRef.current.innerText = `${score}`;
+        }
+    }
 
     const drawHitExplosion= (ctx: CanvasRenderingContext2D) => {
         if(!hitExplosion.isVisibleHit) return;
@@ -73,23 +127,79 @@ const Shooter = () => {
 
     const detectCollision = () => {
         // 운석의 크기 결정
-        let aw = asteroidImg.width * asteroid.randScale;
-        let ah = asteroidImg.height * asteroid.randScale;
+        const aw = asteroidImg.width * asteroid.randScale;
+        const ah = asteroidImg.height * asteroid.randScale;
 
+        const fw = fighterImg.width;
+        const fh = fighterImg.height;
+
+        //비행기와 운석 충돌
+        if(
+            (
+                fighter.x > asteroid.x && fighter.x < asteroid.x + aw &&
+                fighter.y > asteroid.y && fighter.y < asteroid.y + ah
+            ) ||
+            (
+                fighter.x + fw > asteroid.x && fighter.x + fw < asteroid.x + aw &&
+                fighter.y > asteroid.y && fighter.y < asteroid.y + ah
+            ) ||
+            (
+                fighter.x > asteroid.x && fighter.x + fw < asteroid.x + aw &&
+                fighter.y + fh > asteroid.y && fighter.y + fh < asteroid.y + ah
+            ) ||
+            (
+                fighter.x + fw > asteroid.x && fighter.x + fw < asteroid.x + aw &&
+                fighter.y + fh > asteroid.y && fighter.y + fh < asteroid.y + ah
+            )
+        ) {
+            hitExplosion = new HitExplosionVO({
+                x: fighter.x,
+                y: fighter.y,
+                randScale: 1,
+                isVisibleHit: true
+            });
+
+            // 새로운 비행기 등장 시키기 위해 사용하는 상태값
+            fighter.setFighterExplosion(true);
+
+            asteroid.reset();
+            fighter.reset();
+            playExplosionSound();
+
+            if(lives <= 0) {
+                lives = 0;
+                gameOver();
+            } else {
+                --lives;
+            }
+
+            if(livesRef.current) {
+                livesRef.current.innerText = `${lives}`;
+            }
+        }
+
+
+        // 레이저와 운석 충돌 체크
         if(lasers.length) {
             lasers.forEach((item, idx) => {
                 if(item.x > asteroid.x && item.x < asteroid.x + aw
                  && item.y > asteroid.y && item.y < asteroid.y + ah) {
                     // 충돌 위치 입력
                     hitExplosion = new HitExplosionVO({
-                        x: item.x,
-                        y: item.y,
+                        x: asteroid.x,
+                        y: asteroid.y,
                         randScale: asteroid.randScale,
                         isVisibleHit: true
                     });
 
                     lasers.splice(idx, 1);
                     asteroid.reset();
+                    playHitExplosionSound();
+
+                    score += 100;
+                    if(scoreRef.current) {
+                        scoreRef.current.innerText = `${score}`;
+                    }
                 }
             })
         }
@@ -139,17 +249,35 @@ const Shooter = () => {
         }
     }
 
+    const drawFighter = (ctx: CanvasRenderingContext2D) => {
+        if(fighter.fighterExplosion) {
+            // 비행기가 등장
+            ctx.drawImage(fighterImg, fighter.x, fighter.y);
+            fighter.moveX();
+
+            if(fighter.x >= 50) {
+                // 비행기 폭발 상태 값 초기화
+                fighter.setFighterExplosion(false);
+            }
+        } else {
+            ctx.drawImage(fighterImg, fighter.x, fighter.y);
+        }
+    }
+
     const animate = (ctx: CanvasRenderingContext2D) => {
         if(isCompleted) return;
 
         let delta = Date.now() - lastUpdateTime;
+
         if(acDelta > msPerFrame) {
             acDelta = 0;
 
             ctx.drawImage(bgImg, background.x, background.y);
             background.moveX();
 
-            ctx.drawImage(fighterImg, fighter.x, fighter.y);
+            if(isGameOver) return;
+
+            drawFighter(ctx);
 
             drawLaser(ctx);
 
@@ -176,10 +304,31 @@ const Shooter = () => {
                 x: x + 50,
                 y: y + 10
             }));
+            playLaserSound();
         }
     });
 
-    return <canvas ref={ref}/>
+    useEffect(() => {
+        if(livesRef.current) {
+            livesRef.current.innerText = `${lives}`;
+        }
+    }, [livesRef.current]);
+
+    useEffect(() => {
+        if(scoreRef.current) {
+            scoreRef.current.innerText = `${score}`;
+        }
+    }, [scoreRef.current]);
+
+    return (
+        <div style={{position: "relative", width: ctxW, height: ctxH}}>
+            <Lives ref={livesRef}/>
+            <Score ref={scoreRef}/>
+            <SoundButton isGameOver={isGameOver}/>
+            <GameOVer isGameOver={isGameOver} onReStart={reStart} />
+            <canvas ref={ref}/>
+        </div>
+    );
 }
 
 export default Shooter
