@@ -2,6 +2,7 @@ import { CANVAS_WIDTH } from "../global.config";
 
 export class Background {
   x = 0;
+  speed = 1;
   ctx;
   img;
 
@@ -11,8 +12,8 @@ export class Background {
     this.img.src = "images/space.png";
   }
 
-  render() {
-    this.x -= 1;
+  render(deltaTime: number) {
+    this.x -= this.speed * deltaTime;
     if (this.x <= -CANVAS_WIDTH) this.x = 0;
     this.ctx.drawImage(this.img, this.x, 0);
     this.ctx.drawImage(this.img, this.x + CANVAS_WIDTH, 0);

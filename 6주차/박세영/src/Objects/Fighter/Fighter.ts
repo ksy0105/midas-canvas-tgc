@@ -36,12 +36,12 @@ export class Fighter {
   }
 
   controller() {
-    if (keyManager.isPressed("w")) this.move.call(this, DIRECTION.UP);
-    if (keyManager.isPressed("s")) this.move.call(this, DIRECTION.DOWN);
-    if (keyManager.isPressed("a")) this.move.call(this, DIRECTION.LEFT);
-    if (keyManager.isPressed("d")) this.move.call(this, DIRECTION.RIGHT);
+    if (keyManager.isPressed("w")) this.move(DIRECTION.UP);
+    if (keyManager.isPressed("s")) this.move(DIRECTION.DOWN);
+    if (keyManager.isPressed("a")) this.move(DIRECTION.LEFT);
+    if (keyManager.isPressed("d")) this.move(DIRECTION.RIGHT);
 
-    if (keyManager.isPressed(" ")) this.shoot.call(this);
+    if (keyManager.isPressed(" ")) this.shoot();
   }
 
   move(direction: Direction) {

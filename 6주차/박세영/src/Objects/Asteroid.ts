@@ -23,13 +23,11 @@ export class Asteroid {
     );
   }
 
-  move() {
-    this.boundingBox.x -= this.speed;
+  move(deltaTime: number) {
+    this.boundingBox.x -= this.speed * deltaTime;
   }
 
-  render() {
-    this.move.call(this);
-
+  render(deltaTime: number) {
     this.ctx.save();
 
     this.ctx.translate(
@@ -44,5 +42,7 @@ export class Asteroid {
 
     this.ctx.drawImage(this.img, this.boundingBox.x, this.boundingBox.y);
     this.ctx.restore();
+
+    this.move(deltaTime);
   }
 }

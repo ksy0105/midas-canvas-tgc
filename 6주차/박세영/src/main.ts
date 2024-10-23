@@ -3,6 +3,8 @@ import { Asteroid } from "./Objects/Asteroid";
 import { Background } from "./Objects/Background";
 import { Fighter } from "./Objects/Fighter/Fighter";
 
+let lastUpdateTime = Date.now();
+
 class Game {
   $canvas: HTMLCanvasElement;
   ctx: CanvasRenderingContext2D;
@@ -30,6 +32,10 @@ class Game {
   }
 
   render() {
+    const currentTime = Date.now();
+    const deltaTime = currentTime - lastUpdateTime;
+    lastUpdateTime = currentTime;
+
     requestAnimationFrame(this.render.bind(this));
 
     this.collisionDetection();
@@ -38,9 +44,9 @@ class Game {
       return;
     }
 
-    this.background.render();
+    this.background.render(deltaTime);
     this.fighter.render();
-    this.asteroids.forEach((asteroid) => asteroid.render());
+    this.asteroids.forEach((asteroid) => asteroid.render(deltaTime));
   }
 
   collisionDetection() {
