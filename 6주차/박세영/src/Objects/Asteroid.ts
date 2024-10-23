@@ -4,7 +4,7 @@ import { Position } from "../Common/Position";
 export class Asteroid {
   ctx;
   img;
-  speed = 1;
+  speed = 0.13;
   ang = 0;
 
   boundingBox: BoundingBox;

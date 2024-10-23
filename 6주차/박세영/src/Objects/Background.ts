@@ -2,7 +2,7 @@ import { CANVAS_WIDTH } from "../global.config";
 
 export class Background {
   x = 0;
-  speed = 1;
+  speed = 0.03;
   ctx;
   img;
 
