@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + TS</title>
+  </head>
+  <body>
+    <div id="app">
+      <div id="sound" class="sound sound-on"></div>
+      <audio id="audio" class="audio" autoplay loop>
+        <source src="/sounds/bg.mp3" type="audio/mpeg">
+      </audio>
+      <canvas id="canvas" width="600" height="400"></canvas>
+      <div class="lives">LIVE: <span id="lives">0</span></div>
+      <div class="score">SCORE: <span id="score">0</span></div>
+      <div class="game-over" id="game-over">GAME OVER<p><span id="restart">[Restart]</span></p></div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
