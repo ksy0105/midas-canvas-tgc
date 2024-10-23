@@ -7,7 +7,17 @@
     <title>Vite App</title>
 </head>
 <body>
+<div class="sound sound-on"></div>
+<audio autoplay class="myAudio" loop>
+    <source src="sounds/bg.mp3" type="audio/mpeg">
+</audio>
 <canvas height="400" id="myCanvas" width="600"></canvas>
+<div class="lives">LIVE: <span id="lives">0</span></div>
+<div class="score">SCORE: <span id="score">0</span></div>
+<div class="game-over" id="game-over">
+    GAME OVER
+    <p><span id="restart">[Restart]</span></p>
+</div>
 <script src="/src/main.js" type="module"></script>
 </body>
 </html>
