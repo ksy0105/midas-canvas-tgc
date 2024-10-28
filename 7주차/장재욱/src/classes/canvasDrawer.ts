@@ -1,12 +1,9 @@
 import { loadImage } from "../utils/image.ts";
+import {Particle} from "./particle.ts";
 
-interface Particle {
+export interface Position {
     x: number;
     y: number;
-    vx: number;
-    vy: number;
-    life: number;
-    color: string;
 }
 
 class CanvasDrawer {
@@ -16,39 +13,36 @@ class CanvasDrawer {
     private startY: number = 0;
     private order: number = 1;
     private readonly RADIUS = 8;
-    private readonly TOTAL_COUNT = 32;
+    private totalCount: number;
     private particles: Particle[] = [];
     private proceedImage: HTMLImageElement | null = null;
     private finishImage: HTMLImageElement | null = null;
     private onComplete: () => void;
-    private onAnimationComplete: () => void;
+    private onCelebrationAnimationComplete: () => void;
+    private positionList: Position[];
 
-    private readonly positionList = [
-        { x: 251, y: 148 }, { x: 81, y: 69 }, { x: 30, y: 77 },
-        { x: 149, y: 181 }, { x: 110, y: 210 }, { x: 62, y: 164 },
-        { x: 93, y: 224 }, { x: 80, y: 243 }, { x: 109, y: 243 },
-        { x: 152, y: 298 }, { x: 142, y: 255 }, { x: 190, y: 252 },
-        { x: 220, y: 288 }, { x: 214, y: 313 }, { x: 265, y: 288 },
-        { x: 234, y: 280 }, { x: 210, y: 242 }, { x: 224, y: 237 },
-        { x: 500, y: 390 }, { x: 560, y: 349 }, { x: 329, y: 194 },
-        { x: 446, y: 128 }, { x: 503, y: 158 }, { x: 531, y: 140 },
-        { x: 467, y: 107 }, { x: 470, y: 21 }, { x: 444, y: 27 },
-        { x: 420, y: 84 }, { x: 370, y: 65 }, { x: 343, y: 80 },
-        { x: 392, y: 105 },
-    ];
-
-    constructor(canvas: HTMLCanvasElement, onComplete: () => void, onAnimationComplete: () => void) {
+    constructor(
+        canvas: HTMLCanvasElement,
+        proceedImagePath: string,
+        finishImagePath: string,
+        totalCount: number,
+        positionList: Position[],
+        onComplete: () => void,
+        onAnimationComplete: () => void
+    ) {
         this.canvas = canvas;
         this.ctx = this.canvas.getContext('2d');
         this.onComplete = onComplete;
-        this.onAnimationComplete = onAnimationComplete;
-        this.initializeCanvas();
+        this.onCelebrationAnimationComplete = onAnimationComplete;
+        this.totalCount = totalCount;
+        this.positionList = positionList;
+        this.initializeCanvas(proceedImagePath, finishImagePath);
     }
 
-    // 초기화
-    private async initializeCanvas() {
+    // 캔버스 초기화
+    private async initializeCanvas(proceedImagePath: string, finishImagePath: string) {
         const [proceedImage, finishImage] = await Promise.all([
-            loadImage("./src/assets/dottodot_airplane.png"), loadImage("./src/assets/dottodot_airplane_finish.png")
+            loadImage(proceedImagePath), loadImage(finishImagePath)
         ])
         this.proceedImage = proceedImage;
         this.finishImage = finishImage;
@@ -58,7 +52,7 @@ class CanvasDrawer {
     // 점 클릭
     public handleClick(event: React.MouseEvent<HTMLCanvasElement>) {
         // 점을 다 찍었으면 바로 리턴
-        if (!this.ctx || this.order >= this.TOTAL_COUNT) return;
+        if (!this.ctx || this.order >= this.totalCount) return;
 
         const { offsetX: mouseX, offsetY: mouseY } = event.nativeEvent;
         const currentPos = this.positionList[this.order - 1];
@@ -77,7 +71,7 @@ class CanvasDrawer {
         this.order++;
 
         // 점을 다 찍으면 완료 처리
-        if (this.order === this.TOTAL_COUNT) {
+        if (this.order === this.totalCount) {
             this.completeDrawing();
         }
     }
@@ -133,23 +127,9 @@ class CanvasDrawer {
     // 축하 애니메이션
     private startCelebrationAnimation() {
         for (let i = 0; i < 100; i++) {
-            this.particles.push(this.createParticle());
+            this.particles.push(new Particle(this.canvas.width / 2, this.canvas.height / 2));
         }
         requestAnimationFrame(this.animateParticles.bind(this));
-    }
-
-    // 랜덤 파티클 생성
-    private createParticle(): Particle {
-        const angle = Math.random() * Math.PI * 2;
-        const speed = Math.random() * 3 + 2;
-        return {
-            x: this.canvas.width / 2,
-            y: this.canvas.height / 2,
-            vx: Math.cos(angle) * speed,
-            vy: Math.sin(angle) * speed,
-            life: 100,
-            color: `hsl(${Math.random() * 360}, 100%, 50%)`,
-        };
     }
 
     // 생성된 파티클로 애니메이션 그리기
@@ -158,18 +138,12 @@ class CanvasDrawer {
 
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx?.drawImage(this.finishImage!, 0, 0);
-        this.particles = this.particles.filter((p) => p.life > 0);
 
-        for (const particle of this.particles) {
-            this.ctx!.beginPath();
-            this.ctx!.arc(particle.x, particle.y, 4, 0, Math.PI * 2);
-            this.ctx!.fillStyle = particle.color;
-            this.ctx!.fill();
-
-            particle.x += particle.vx;
-            particle.y += particle.vy;
-            particle.life -= 1;
-        }
+        this.particles = this.particles.filter((p) => p.isAlive());
+        this.particles.forEach((particle) => {
+            particle.update();
+            particle.draw(this.ctx!);
+        });
 
         // 파티클이 있으면 계속 애니메이션 실행
         if (this.particles.length > 0) {
@@ -184,7 +158,7 @@ class CanvasDrawer {
     private async doAfterCelebrationAnimation() {
         this.ctx?.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx?.drawImage(this.finishImage!, 0, 0);
-        this.onAnimationComplete();
+        this.onCelebrationAnimationComplete();
     }
 }
 

@@ -1,5 +1,5 @@
-import {useEffect, useRef, useState} from "react";
-import CanvasDrawer from "../classes/canvasDrawer.ts";
+import {FC, useEffect, useRef, useState} from "react";
+import CanvasDrawer, {Position} from "../classes/canvasDrawer.ts";
 import "./drawLineCanvas.css";
 
 interface Record {
@@ -7,7 +7,15 @@ interface Record {
     time: number;
 }
 
-const DrawLineCanvas = () => {
+interface Props {
+    id: string;
+    drawingImage: string;
+    completedImage: string;
+    totalCount: number;
+    positionList: Position[];
+}
+
+const DrawLineCanvas: FC<Props> = ({id, drawingImage, completedImage, totalCount, positionList}) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const drawerRef = useRef<CanvasDrawer | null>(null);
     const timerRef = useRef<number | null>(null);
@@ -23,6 +31,7 @@ const DrawLineCanvas = () => {
         loadRecords();
     }, []);
 
+    // 시작하면 타이머 시작
     useEffect(() => {
         if (isStarted) {
             timerRef.current = window.setInterval(() => {
@@ -38,25 +47,47 @@ const DrawLineCanvas = () => {
         };
     }, [isStarted]);
 
-    const startGame = () => {
+    // 게임 리셋
+    const resetGame = () => {
         setIsStarted(true);
         setBlockScreen(false);
         setIsFirst(false);
         setIsSubmit(false);
         setElapsedTime(0);
+    }
+
+    // 게임 시작, CanvasDrawer 객체 생성
+    const startGame = () => {
+        resetGame();
         if (canvasRef.current) {
-            drawerRef.current = new CanvasDrawer(canvasRef.current, onComplete, () => {setBlockScreen(true)});
+            drawerRef.current = new CanvasDrawer(
+                canvasRef.current,
+                drawingImage,
+                completedImage,
+                totalCount,
+                positionList,
+                onComplete,
+                onCelebrationAnimationComplete
+            );
         }
     };
 
+    // 게임 완료
     const onComplete = () => {
         setIsStarted(false);
     };
 
+    // 게임 완료 축하 애니메이션 종료
+    const onCelebrationAnimationComplete = () => {
+        setBlockScreen(true)
+    }
+
+    // 점 클릭
     const handleClick = (event: React.MouseEvent<HTMLCanvasElement>) => {
         if (isStarted) drawerRef.current?.handleClick(event);
     };
 
+    // 기록 제출
     const handleNameSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (playerName.trim() !== "") {
@@ -70,15 +101,17 @@ const DrawLineCanvas = () => {
         }
     };
 
+    // 로컬스토리지에서 기록 불러오기
     const loadRecords = () => {
-        const records = localStorage.getItem("records");
+        const records = localStorage.getItem(`${id} records`);
         if (records) {
             setRecords(JSON.parse(records));
         }
     };
 
+    // 로컬스토리지에 기록 저장
     const saveRecords = (records: Record[]) => {
-        localStorage.setItem("records", JSON.stringify(records));
+        localStorage.setItem(`${id} records`, JSON.stringify(records));
     };
 
     return (
@@ -86,19 +119,18 @@ const DrawLineCanvas = () => {
             <div className={"canvas_container"}>
                 {blockScreen && (
                     <div className={"before_start_container"}>
-                        {(!isFirst && elapsedTime > 0) && <h3 style={{color: "#fff"}}>Your record is {elapsedTime} seconds.</h3>}
-                        <button onClick={startGame} style={{fontSize: "20px", padding: "5px"}}>{isFirst ? 'Start' : 'Retry'}</button>
+                        {(!isFirst && elapsedTime > 0) && <h3>Your record is {elapsedTime} seconds.</h3>}
+                        <button onClick={startGame}>{isFirst ? 'Start' : 'Retry'}</button>
                         {
                             (!isFirst && !isSubmit) &&
-                            <form onSubmit={handleNameSubmit} style={{marginTop: "20px"}}>
+                            <form onSubmit={handleNameSubmit} className={"record_container"}>
                                 <input
                                     type="text"
                                     placeholder="Your Name"
                                     value={playerName}
                                     onChange={(e) => setPlayerName(e.target.value)}
-                                    style={{fontSize: "20px", padding: "5px"}}
                                 />
-                                <button type="submit" style={{fontSize: "20px", padding: "5px"}}>
+                                <button type="submit">
                                     Submit
                                 </button>
                             </form>

@@ -26,3 +26,18 @@ img {
     justify-content: center;
     align-items: center;
 }
+
+.canvas_container .before_start_container h3 {
+    color: #fff;
+}
+
+.canvas_container .before_start_container button,
+.canvas_container .before_start_container input {
+    font-size: 20px;
+    padding: 5px;
+}
+
+.record_container {
+    margin-top: 20px;
+}
+

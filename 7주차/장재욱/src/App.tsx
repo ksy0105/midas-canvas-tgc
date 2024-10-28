@@ -1,9 +1,9 @@
-import DrawLineCanvas from "./components/DrawLineCanvas.tsx";
+import Ex1 from "./components/Ex1.tsx";
 
 function App() {
   return (
     <>
-      <DrawLineCanvas/>
+      <Ex1/>
     </>
   )
 }
