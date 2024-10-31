@@ -146,15 +146,8 @@ class CanvasDrawer {
             requestAnimationFrame(this.animateParticles.bind(this));
         } else {
             // 애니메이션 종료
-            this.doAfterCelebrationAnimation();
+            this.onCelebrationAnimationComplete();
         }
-    }
-
-    // 애니메이션 종료후 실행
-    private async doAfterCelebrationAnimation() {
-        this.ctx?.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.ctx?.drawImage(this.finishImage!, 0, 0);
-        this.onCelebrationAnimationComplete();
     }
 }
 
