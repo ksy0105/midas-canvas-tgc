@@ -9,8 +9,6 @@ export interface Position {
 class CanvasDrawer {
     private canvas: HTMLCanvasElement;
     private ctx: CanvasRenderingContext2D | null;
-    private startX: number = 0;
-    private startY: number = 0;
     private order: number = 1;
     private readonly RADIUS = 8;
     private totalCount: number;
@@ -86,10 +84,8 @@ class CanvasDrawer {
 
     // 맨 처음 점의 좌표 찍기
     private startLine(mouseX: number, mouseY: number) {
-        this.startX = mouseX - 5;
-        this.startY = mouseY;
         this.ctx?.beginPath();
-        this.ctx?.moveTo(this.startX, this.startY);
+        this.ctx?.moveTo(mouseX - 5, mouseY);
     }
 
     // 찍은 좌표까지 선 그리기
