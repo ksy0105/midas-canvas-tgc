@@ -125,7 +125,7 @@ class CanvasDrawer {
         for (let i = 0; i < 100; i++) {
             this.particles.push(new Particle(this.canvas.width / 2, this.canvas.height / 2));
         }
-        requestAnimationFrame(this.animateParticles.bind(this));
+        this.animateParticles();
     }
 
     // 생성된 파티클로 애니메이션 그리기
