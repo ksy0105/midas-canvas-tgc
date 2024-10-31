@@ -3,11 +3,13 @@ import { useState } from "react";
 import Canvas3_20 from "./Canvas5/Canvas3_20";
 import Canvas3_20_2 from "./Canvas5/Canvas3_20_2";
 import Canvas3_20_3 from "./Canvas5/Canvas3_20_3";
+import CanvasSnow from "./Canvas5/Canvas3_18";
 
 const CanvasGallery = () => {
   const [currentCanvasIndex, setCurrentCanvasIndex] = useState(0);
 
   const canvasComponents = [
+    <CanvasSnow />,
     <Canvas3_20 key={1} />,
     <Canvas3_20_2 />,
     <Canvas3_20_3 />,
