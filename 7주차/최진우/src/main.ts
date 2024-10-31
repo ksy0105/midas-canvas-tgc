@@ -35,7 +35,7 @@ const point = [
     {x: 370, y: 65},
     {x: 343, y: 80},
     {x: 392, y: 105},
-]
+];
 
 // 이미지 가져오기
 const img = document.querySelector('#img') as HTMLImageElement;
@@ -51,8 +51,6 @@ let startX = 0;
 let startY = 0;
 let arrCoords = [];
 const totalPoint = 31;
-const finishImage = new Image();
-finishImage.src = './src/images/airplane_finish.png';
 
 // 마우스 클릭시 선 그리기
 ctx.canvas.addEventListener('click', (e) => {
@@ -109,19 +107,35 @@ ctx.canvas.addEventListener('click', (e) => {
     setTimeout(() => {
         // 총 포인트의 개수와 같으면 완성된 이미지 노출
         if (arrCoords.length === totalPoint) {
-            render();
+            gameOver();
         }
-    }, 100);
+    }, 500);
 });
 
-const render = () => {
+const finishImage = new Image();
+finishImage.src = './src/images/airplane_finish.png';
+
+// 게임 완료
+const gameOver = () => {
     ctx.drawImage(finishImage, 0, 0);
+    clearInterval(timerInterval);
 
     setTimeout(() => {
         document.getElementById('finishArea')!.style.display = 'flex';
-    }, 1000);
+        document.getElementById('playTime')!.innerHTML = `${timer}`;
+    }, 500);
 }
 
+// 다시 시작
 document.querySelector('#restart')?.addEventListener('click', () => {
-    location.reload();
+    location.reload()
 });
+
+// 타이머
+let timer = 0;
+document.getElementById('timer')!.innerHTML = `${timer}`;
+
+const timerInterval = setInterval(() => {
+    timer++
+    document.getElementById('timer')!.innerHTML = `${timer}`;
+}, 1000);
