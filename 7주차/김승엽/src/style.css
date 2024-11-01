@@ -1,0 +1,23 @@
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #D0D0D0;
+  height: 100vh;
+  margin: 0;
+}
+
+#canvas {
+  background: white;
+  border: #909090 1px solid;
+}
+
+#img {
+  display: none;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -1,0 +1,13 @@
+body {
+    margin: 10px;
+    background: #D0D0D0;
+}
+
+#myCanvas {
+    background: #FFFFFF;
+    border: #909090 1px solid;
+}
+
+#img {
+    display: none;
+}
