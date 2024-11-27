@@ -10,9 +10,10 @@ import { GUI } from "three/addons/libs/lil-gui.module.min.js";
 
 interface FaceProps {
   className?: string;
+  onReady?: (changeExpression: (expression: string) => void) => void;
 }
 
-const Face = ({ className }: FaceProps) => {
+const Face = ({ className, onReady }: FaceProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -25,6 +26,9 @@ const Face = ({ className }: FaceProps) => {
     let mixer: THREE.AnimationMixer;
     let clock: THREE.Clock;
     let controls: OrbitControls;
+    let head: THREE.Mesh;
+    let morphTargetDictionary: { [key: string]: number };
+    let influences: number[];
 
     // 초기화 함수
     const init = () => {
@@ -60,9 +64,9 @@ const Face = ({ className }: FaceProps) => {
 
           mixer = new THREE.AnimationMixer(mesh);
 
-          const head = mesh.getObjectByName("mesh_2") as THREE.Mesh;
-          const influences = head?.morphTargetInfluences;
-          const morphTargetDictionary = head?.morphTargetDictionary;
+          head = mesh.getObjectByName("mesh_2") as THREE.Mesh;
+          influences = head?.morphTargetInfluences || [];
+          morphTargetDictionary = head?.morphTargetDictionary || {};
 
           const gui = new GUI();
           gui.close();
@@ -80,58 +84,63 @@ const Face = ({ className }: FaceProps) => {
             }
           }
 
-          // if (morphTargetDictionary && influences) {
-          //   for (const [key, value] of Object.entries(morphTargetDictionary)) {
-          //     gui
-          //       .add(influences, value, 0, 1, 0.01)
-          //       .name(key.replace("blendShape1.", ""))
-          //       .listen();
-          //   }
+          // 표정 변화 함수 정의
+          const changeExpression = (expression: string) => {
+            const animationDuration = 1000; // 1초
+            const startValues = influences.slice(); // 현재 값들을 복사
+            let startTime: number | null = null;
 
-          //   // 초기에 모든 표정을 0으로 설정
-          //   // for (let i = 0; i < influences.length; i++) {
-          //   //   influences[i] = 0;
-          //   // }
+            const targetValues = {
+              openMouth: {
+                jawOpen: 0.7,
+                mouthFunnel: 0.3,
+                tongueOut: 0.2,
+              },
+              closeMouth: {
+                jawOpen: 0.13,
+                mouthFunnel: 0.07,
+                tongueOut: 0,
+              },
+            };
 
-          //   // 표정 변화를 위한 변수들
-          //   // let animationStartTime: number | null = null;
-          //   // const animationDuration = 1000; // 1초 동안 변화
+            const animate = (currentTime: number) => {
+              if (!startTime) startTime = currentTime;
+              const elapsed = currentTime - startTime;
+              const progress = Math.min(elapsed / animationDuration, 1);
 
-          //   // // 표정 변화 애니메이션 함수
-          //   // const animateExpression = (currentTime: number) => {
-          //   //   if (!animationStartTime) animationStartTime = currentTime;
+              const easeProgress =
+                progress < 0.5
+                  ? 2 * progress * progress
+                  : 1 - Math.pow(-2 * progress + 2, 2) / 2;
 
-          //   //   const elapsedTime = currentTime - animationStartTime;
-          //   //   const progress = Math.min(elapsedTime / animationDuration, 1);
+              // 표정 업데이트 로직 수정
+              const currentTarget =
+                targetValues[expression as keyof typeof targetValues];
+              if (currentTarget) {
+                Object.entries(currentTarget).forEach(([key, targetValue]) => {
+                  const index = morphTargetDictionary[key];
+                  if (typeof index !== "undefined") {
+                    influences[index] =
+                      startValues[index] +
+                      (targetValue - startValues[index]) * easeProgress;
+                  }
+                });
+              }
 
-          //   //   const easeProgress =
-          //   //     progress < 0.5
-          //   //       ? 2 * progress * progress
-          //   //       : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+              renderer.render(scene, camera);
 
-          //   //   const jawOpenIndex = morphTargetDictionary["jawOpen"];
-          //   //   const mouthFunnelIndex = morphTargetDictionary["mouthFunnel"];
-          //   //   const tongueOutIndex = morphTargetDictionary["tongueOut"];
+              if (progress < 1) {
+                requestAnimationFrame(animate);
+              }
+            };
 
-          //   //   if (typeof jawOpenIndex !== "undefined") {
-          //   //     influences[jawOpenIndex] = 0.7 * easeProgress;
-          //   //   }
-          //   //   if (typeof mouthFunnelIndex !== "undefined") {
-          //   //     influences[mouthFunnelIndex] = 0.3 * easeProgress;
-          //   //   }
-          //   //   if (typeof tongueOutIndex !== "undefined") {
-          //   //     influences[tongueOutIndex] = 0.2 * easeProgress;
-          //   //   }
+            requestAnimationFrame(animate);
+          };
 
-          //   //   if (progress < 1) {
-          //   //     requestAnimationFrame(animateExpression);
-          //   //   }
-          //   // };
-
-          //   // setTimeout(() => {
-          //   //   requestAnimationFrame(animateExpression);
-          //   // }, 1000);
-          // }
+          // onReady 콜백으로 표정 변화 함수 전달
+          if (onReady) {
+            onReady(changeExpression);
+          }
         });
 
       const environment = new RoomEnvironment();
@@ -183,7 +192,7 @@ const Face = ({ className }: FaceProps) => {
       containerRef.current?.removeChild(renderer.domElement);
       containerRef.current?.removeChild(stats.dom);
     };
-  }, []);
+  }, [onReady]);
 
   return <div ref={containerRef} className={className}></div>;
 };
