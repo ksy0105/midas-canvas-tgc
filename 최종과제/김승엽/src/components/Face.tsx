@@ -8,6 +8,62 @@ import { MeshoptDecoder } from "three/addons/libs/meshopt_decoder.module.js";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 import { GUI } from "three/addons/libs/lil-gui.module.min.js";
 
+// 모든 속성은 0~1 사이의 값을 가짐
+type MorphTargetDictionaryType = {
+  browDown_L: number;
+  browDown_R: number;
+  browInnerUp: number;
+  browOuterUp_L: number;
+  browOuterUp_R: number;
+  cheekPuff: number;
+  cheekSquint_L: number;
+  cheekSquint_R: number;
+  eyeBlink_L: number;
+  eyeBlink_R: number;
+  eyeLookDown_L: number;
+  eyeLookDown_R: number;
+  eyeLookIn_L: number;
+  eyeLookIn_R: number;
+  eyeLookOut_L: number;
+  eyeLookOut_R: number;
+  eyeLookUp_L: number;
+  eyeLookUp_R: number;
+  eyeSquint_L: number;
+  eyeSquint_R: number;
+  eyeWide_L: number;
+  eyeWide_R: number;
+  jawForward: number;
+  jawLeft: number;
+  jawOpen: number;
+  jawRight: number;
+  mouthClose: number;
+  mouthDimple_L: number;
+  mouthDimple_R: number;
+  mouthFrown_L: number;
+  mouthFrown_R: number;
+  mouthFunnel: number;
+  mouthLeft: number;
+  mouthLowerDown_L: number;
+  mouthLowerDown_R: number;
+  mouthPress_L: number;
+  mouthPress_R: number;
+  mouthPucker: number;
+  mouthRight: number;
+  mouthRollLower: number;
+  mouthRollUpper: number;
+  mouthShrugLower: number;
+  mouthShrugUpper: number;
+  mouthSmile_L: number;
+  mouthSmile_R: number;
+  mouthStretch_L: number;
+  mouthStretch_R: number;
+  mouthUpperUp_L: number;
+  mouthUpperUp_R: number;
+  noseSneer_L: number;
+  noseSneer_R: number;
+  tongueOut: number;
+};
+
 interface FaceProps {
   className?: string;
   onReady?: (changeExpression: (expression: string) => void) => void;
@@ -66,7 +122,8 @@ const Face = ({ className, onReady }: FaceProps) => {
 
           head = mesh.getObjectByName("mesh_2") as THREE.Mesh;
           influences = head?.morphTargetInfluences || [];
-          morphTargetDictionary = head?.morphTargetDictionary || {};
+          morphTargetDictionary =
+            (head?.morphTargetDictionary as MorphTargetDictionaryType) || {};
 
           const gui = new GUI();
           gui.close();
