@@ -5,6 +5,8 @@ import { CANVAS_HEIGHT, CANVAS_WIDTH } from "../game/constants.ts";
 
 function Game() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
+
   const { startGame, pauseGame, resumeGame, exitGame, gameState, isPaused } =
     useGame(canvasRef);
 
@@ -12,6 +14,7 @@ function Game() {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape" && gameState === "playing") {
         pauseGame();
+        audioRef.current?.pause();
       }
     };
 
@@ -20,31 +23,46 @@ function Game() {
   }, [gameState, pauseGame]);
 
   return (
-    <div className="game-container">
-      <canvas
-        ref={canvasRef}
-        className="game-canvas"
-        width={CANVAS_WIDTH}
-        height={CANVAS_HEIGHT}
-      />
+      <div className="game-container">
+          <canvas
+              ref={canvasRef}
+              className="game-canvas"
+              width={CANVAS_WIDTH}
+              height={CANVAS_HEIGHT}
+          />
 
-      <div className="controls">
-        {gameState === "idle" && (
-          <button className="button" onClick={startGame}>
-            Start Game
-          </button>
-        )}
-      </div>
+          <div className="controls">
+              {gameState === "idle" && (
+                  <button className="button" onClick={() => {
+                      startGame();
+                      audioRef.current?.play();
+                  }}>
+                      Start Game
+                  </button>
+              )}
+          </div>
 
-      <div className={`pause-menu ${isPaused ? "active" : ""}`}>
-        <button className="button" onClick={resumeGame}>
-          Resume
-        </button>
-        <button className="button" onClick={exitGame}>
-          Exit Game
-        </button>
+          <div className={`pause-menu ${isPaused ? "active" : ""}`}>
+              <button className="button" onClick={() => {
+                  resumeGame();
+                  audioRef.current?.play();
+              }}>
+                  Resume
+              </button>
+              <button className="button" onClick={() => {
+                  exitGame();
+                  if (audioRef.current) {
+                      audioRef.current.pause();
+                      audioRef.current.currentTime = 0;
+                  }
+              }}>
+                  Exit Game
+              </button>
+          </div>
+          <audio ref={audioRef}>
+              <source src={"./src/assets/Unavailable.mp3"} type={"audio/mpeg"}/>
+          </audio>
       </div>
-    </div>
   );
 }
 

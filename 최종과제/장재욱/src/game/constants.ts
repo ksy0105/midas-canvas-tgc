@@ -30,4 +30,4 @@ export const SAFE_TIME_IN_LONG_NOTE_ACTIVE = 10;
 // 노트와 매칭되는 키를 누르지 않아 MISS를 띄울 때 기준이 되는 선
 export const PASSED_LINE_Y = 50;
 // FPS
-export const FPS = 60;
+export const FPS = 70;
