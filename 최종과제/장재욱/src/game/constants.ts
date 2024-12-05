@@ -26,7 +26,7 @@ export const TIME_CONSIDERING_PASSED = 30;
 // 긴 노트 누르는 동안 증가하는 콤보 인터벌
 export const INTERVAL_IN_LONG_NOTE_ACTIVE = 100;
 // 긴 노트 누르는 동안 인터벌 증가할때 생기는 딜레이 고려한 안전 시간?
-export const SAFE_TIME_IN_LONG_NOTE_ACTIVE = 10;
+export const SAFE_TIME_IN_LONG_NOTE_ACTIVE = 35;
 // 노트와 매칭되는 키를 누르지 않아 MISS를 띄울 때 기준이 되는 선
 export const PASSED_LINE_Y = 50;
 // FPS
