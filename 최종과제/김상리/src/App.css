@@ -1,0 +1,164 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+h1 {
+  text-align: left;
+  margin: 0;
+}
+.wrap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  position: relative;
+}
+.wrap canvas {
+  background: #fff;
+  border: #909090 1px solid;
+}
+.canvas_area {
+  position: relative;
+}
+.group_btn {
+  display: flex;
+  column-gap: 15px;
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.btn_music {
+  height: 40px;
+  background-color: rgb(239 68 68);
+  padding: 0 16px;
+  border-radius: 40px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+}
+.btn_music:hover {
+  background-color: rgb(220 38 38);
+}
+.btn_bg {
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  background-color: rgb(5, 209, 110);
+  position: relative;
+}
+.btn_bg:hover {
+  background-color: rgb(5, 188, 99);
+}
+.btn_bg svg {
+  position: absolute;
+  top: 50%;
+  left: 55%;
+  transform: translate(-55%, -50%);
+}
+.marquee_box {
+  width: 1002px;
+  overflow: hidden;
+  position: absolute;
+}
+
+.marquee_box.pos_top {
+  top: -57px;
+}
+.marquee_box.pos_left {
+  width: 51px;
+  height: 716px;
+  top: -57px;
+  left: -51px;
+}
+.marquee_box.pos_right {
+  width: 51px;
+  height: 716px;
+  top: -57px;
+  right: -51px;
+}
+.marquee_box.pos_left h1,
+.marquee_box.pos_right h1 {
+  height: 100%;
+}
+.marquee_box.pos_bottom {
+  bottom: -57px;
+}
+
+.marquee {
+  display: flex;
+  white-space: nowrap;
+}
+
+.marquee span {
+  display: inline-block;
+  padding-right: 100%;
+}
+
+.marquee-moving {
+  animation: marquee-left 10s linear infinite;
+}
+
+.marquee-paused {
+  animation-play-state: paused;
+}
+
+.marquee-topbottom {
+  animation: marquee-top 10s linear infinite;
+}
+
+@keyframes marquee-left {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes marquee-top {
+  from {
+    transform: translateY(0%);
+  }
+  to {
+    transform: translateY(-100%);
+  }
+}
