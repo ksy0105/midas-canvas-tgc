@@ -1,7 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { useGame } from "../hooks/useGame.ts";
 import "./game.css";
-import { CANVAS_HEIGHT, CANVAS_WIDTH } from "../game/constants.ts";
+import {
+  CANVAS_HEIGHT,
+  CANVAS_WIDTH,
+  FIRST_AUDIO_DELAY,
+} from "../game/constants.ts";
 
 function Game() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -9,6 +13,7 @@ function Game() {
 
   const [playerName, setPlayerName] = useState("");
   const [showLeaderboard, setShowLeaderboard] = useState(false);
+  const isFirstAudioPlay = useRef(false);
 
   const {
     startGame,
@@ -45,6 +50,12 @@ function Game() {
     };
   }, [gameState, pauseGame, resumeGame]);
 
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.load();
+    }
+  }, []);
+
   const saveScore = () => {
     if (playerName.trim() === "") return;
 
@@ -76,6 +87,15 @@ function Game() {
     );
   };
 
+  const waitFirstAudioPlay = async () => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(null);
+        isFirstAudioPlay.current = true;
+      }, FIRST_AUDIO_DELAY);
+    });
+  };
+
   return (
     <div className="game-container">
       <canvas
@@ -101,6 +121,9 @@ function Game() {
                     if (audioRef.current) {
                       audioRef.current.load();
                       await audioRef.current?.play();
+                      if (!isFirstAudioPlay.current) {
+                        await waitFirstAudioPlay();
+                      }
                       startGame();
                     }
                   }}
@@ -173,13 +196,7 @@ function Game() {
         </button>
       </div>
       <audio ref={audioRef}>
-        <source
-          src={"./src/assets/jingle-bells.mp3"}
-          type={"audio/mpeg"}
-          onLoad={() => {
-            console.log("음악 로드 완료");
-          }}
-        />
+        <source src={"./src/assets/jingle-bells.mp3"} type={"audio/mpeg"} />
       </audio>
     </div>
   );
